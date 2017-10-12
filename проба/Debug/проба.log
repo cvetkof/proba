@@ -1,0 +1,7 @@
+﻿  проба.cpp
+c:\users\alex\source\repos\проба\проба.cpp(97): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+c:\users\alex\source\repos\проба\проба.cpp(177): warning C4552: +: оператор не имеет результата; требуется оператор с побочным действием
+c:\users\alex\source\repos\проба\проба.cpp(180): warning C4552: +: оператор не имеет результата; требуется оператор с побочным действием
+c:\users\alex\source\repos\проба\проба.cpp(185): warning C4552: +: оператор не имеет результата; требуется оператор с побочным действием
+  проба.vcxproj -> C:\Users\Alex\source\repos\проба\Debug\проба.exe
+  проба.vcxproj -> C:\Users\Alex\source\repos\проба\Debug\проба.pdb (Partial PDB)
