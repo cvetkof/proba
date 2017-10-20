@@ -1,0 +1,7 @@
+C:\Users\Alex\source\repos\test-csharp\bin\Debug\test-csharp.exe.config
+C:\Users\Alex\source\repos\test-csharp\bin\Debug\test-csharp.exe
+C:\Users\Alex\source\repos\test-csharp\bin\Debug\test-csharp.pdb
+C:\Users\Alex\source\repos\test-csharp\obj\Debug\test-csharp.csprojResolveAssemblyReference.cache
+C:\Users\Alex\source\repos\test-csharp\obj\Debug\test-csharp.csproj.CoreCompileInputs.cache
+C:\Users\Alex\source\repos\test-csharp\obj\Debug\test-csharp.exe
+C:\Users\Alex\source\repos\test-csharp\obj\Debug\test-csharp.pdb
