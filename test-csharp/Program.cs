@@ -14,6 +14,10 @@ namespace test_csharp
             int a, b;
             var x = "y";
 
+            List<int> listTest = new List<int>();
+
+
+
             while (x != "n")
                 {
 
@@ -32,6 +36,16 @@ namespace test_csharp
 
             }
                 
+            for (int i=0; i<10; i++)
+            {
+                listTest.Add(i + 1);
+                Console.WriteLine(listTest[i]);
+                Console.ReadKey();
+            }
+
+
+
+
 
         }
     }
