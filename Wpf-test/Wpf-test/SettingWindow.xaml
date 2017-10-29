@@ -5,16 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_test"
         mc:Ignorable="d"
-        Title="Настройки" Height="350" Width="525">
+        Title="Initial settings" Height="350" Width="525">
     <Grid>
-        <Label Content="Количество задач" HorizontalAlignment="Left" Margin="47,54,0,0" VerticalAlignment="Top" Height="26" Width="154"/>
-        <Label Content="Количество процессоров" HorizontalAlignment="Left" Margin="47,117,0,0" VerticalAlignment="Top" Height="30" Width="154"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="356,54,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="1" Name="TaskCountTextBox"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="356,117,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="120" Name="ProcCountTextBox"/>
-        <Button Content="Сгенерировать случайные значения" Background="#FF00E8FF" HorizontalAlignment="Left" Margin="47,229,0,0" VerticalAlignment="Top" Width="207" Height="48" Name="GenerateRandValueButton" Click="GenerateRandValueButton_Click"/>
-        <Button Content="Ввести значения вручную" HorizontalAlignment="Left" Margin="322,229,0,0" VerticalAlignment="Top" Width="154" Height="48" Name="EnterValueManuallyButton" Click="EnterValueManuallyButton_Click"/>
-        <Label Content="Директивное время" HorizontalAlignment="Left" Margin="47,179,0,0" VerticalAlignment="Top" Width="154"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="356,179,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="120" Name="DirectTimeTextBox"/>
+        <Label Content="Введите количество задач" HorizontalAlignment="Left" Margin="47,54,0,0" VerticalAlignment="Top" Height="26" Width="207"/>
+        <Label Content="Введите количество процессоров" HorizontalAlignment="Left" Margin="47,117,0,0" VerticalAlignment="Top" Height="30" Width="207"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="259,54,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="217" Text="1" Name="TaskCountTextBox"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="259,117,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="217" Name="ProcCountTextBox"/>
+        <Button Content="Сгенерировать случайные значения" HorizontalAlignment="Left" Margin="47,229,0,0" VerticalAlignment="Top" Width="207" Height="48" Name="GenerateRandValueButton" Click="GenerateRandValueButton_Click"/>
+        <Button Content="Ввести значения вручную" HorizontalAlignment="Left" Margin="259,229,0,0" VerticalAlignment="Top" Width="217" Height="48" Name="EnterValueManuallyButton" Click="EnterValueManuallyButton_Click"/>
+        <Label Content="Введите директивное время" HorizontalAlignment="Left" Margin="47,179,0,0" VerticalAlignment="Top" Width="207"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="259,179,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="217" Name="DirectTimeTextBox"/>
 
     </Grid>
 </Window>

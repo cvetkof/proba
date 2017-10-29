@@ -37,18 +37,12 @@ namespace Wpf_test
         {
             if (settingsParametrs.InputType == Enums.InputType.Manually)
             {
-
+                
             }
             else
             {
-
+                
             }
-
-
-
-
-
-
         }
     }
 }

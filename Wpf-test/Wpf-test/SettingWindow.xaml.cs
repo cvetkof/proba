@@ -49,19 +49,20 @@ namespace Wpf_test
 
         }
 
-        private SettingsParametrs GetSettingsParametrs(Enums.InputType inputType)
+        private SettingsParametrs GetSettingsParametrs(Enums.InputType inputType) // метод, присваивающий полям объкта значения,
+                                                                                  // введеные в начальном окне  
         {
-            var taskCountTextBoxValue = Convert.ToInt16(TaskCountTextBox.Text); // ввод только цифр
+            int taskCountTextBoxValue = Convert.ToInt16(TaskCountTextBox.Text); // ввод только цифр
 
-            var procCountTextBoxValue = Convert.ToInt16(ProcCountTextBox.Text); // ввод только цыфр
+            int procCountTextBoxValue = Convert.ToInt16(ProcCountTextBox.Text); // ввод только цыфр
 
-            var directTimeTextBoxValue = Convert.ToDouble(DirectTimeTextBox.Text);
+            double directTimeTextBoxValue = Convert.ToDouble(DirectTimeTextBox.Text);
 
             var settingParametrs = new SettingsParametrs();
-            settingParametrs.TaskCounts = taskCountTextBoxValue;
-            settingParametrs.ProcCount = procCountTextBoxValue;
-            settingParametrs.DirectTime = directTimeTextBoxValue;
-            settingParametrs.InputType = inputType;
+            settingParametrs.TaskCounts = taskCountTextBoxValue; //количество задач 
+            settingParametrs.ProcCount = procCountTextBoxValue; //количество процессоров
+            settingParametrs.DirectTime = directTimeTextBoxValue; //директивное время
+            settingParametrs.InputType = inputType; // тип ввода значений матрицы
 
             return settingParametrs;
         }

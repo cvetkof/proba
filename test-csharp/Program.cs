@@ -42,11 +42,6 @@ namespace test_csharp
                 Console.WriteLine(listTest[i]);
                 Console.ReadKey();
             }
-
-
-
-
-
         }
     }
 }

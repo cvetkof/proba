@@ -8,12 +8,19 @@
         Title="Матрица параметров" Height="358.059" Width="459.574">
     <Grid>
         <Label Content="Proc" HorizontalAlignment="Left" Margin="346,41,0,0" VerticalAlignment="Top" Width="50"/>
+
         <Label Content="TimeD" HorizontalAlignment="Left" Margin="346,144,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.52,2.903" Width="56"/>
+
         <Border BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" Height="27" Margin="346,85,56,0" RenderTransformOrigin="0.503,-0.6">
-            <TextBlock TextAlignment="Center" FontSize="15" Name="ProcCountTextBlock"></TextBlock>
-        </Border>        
-        <Border BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" Height="27" Margin="346,193,56,0" RenderTransformOrigin="0.503,-0.6">
-            <TextBlock TextAlignment="Center" FontSize="15" Name="DirectTimeTextBlock"></TextBlock>
+            <TextBlock TextAlignment="Center" FontSize="13" Name="ProcCountTextBlock"></TextBlock>
+        </Border>
+
+        <Border BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" Height="27" Margin="346,193,56,0">
+            <TextBlock TextAlignment="Center" FontSize="13" Name="DirectTimeTextBlock"></TextBlock>
+        </Border>
+
+        <Border BorderBrush="Black" BorderThickness="1" Margin="10,6,112,12" Height="307">
+            <TextBlock TextAlignment="Center" FontSize="12" Name="ResultTextBlock"></TextBlock>
         </Border>
 
     </Grid>
