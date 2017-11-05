@@ -31,9 +31,10 @@ namespace Wpf_test
 
             var parametesWindow = new ParametersWindow(settingsParametrs); // Создание объекта нового окна с параметрами
 
-            parametesWindow.Show(); // Открытие окна с параметрами
+            parametesWindow.Owner = this;
+            parametesWindow.ShowDialog(); // Открытие окна с параметрами
 
-            this.Close(); //ЗАкрытие окна с настройками 
+            //this.Close(); //Закрытие окна с настройками 
             
         }
 
@@ -43,9 +44,10 @@ namespace Wpf_test
 
             var parametesWindow = new ParametersWindow(settingsParametrs); // Создание объекта нового окна с параметрами
 
-            parametesWindow.Show(); // Открытие окна с параметрами
+            parametesWindow.Owner = this;
+            parametesWindow.ShowDialog(); // Открытие окна с параметрами
 
-            this.Close(); //ЗАкрытие окна с настройками 
+            this.Close(); //Закрытие окна с настройками 
 
         }
 

@@ -8,7 +8,7 @@ using Wpf_test.Enums;
 namespace Wpf_test
 {
 
-    public class SettingsParametrs
+    public class SettingsParametrs // класс количесва задач, процессоров, директивного времени и типа ввода параметров задач
     {
         public int TaskCounts { get; set; }
 

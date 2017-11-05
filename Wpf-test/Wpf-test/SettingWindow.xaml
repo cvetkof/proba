@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_test"
         mc:Ignorable="d"
-        Title="Initial settings" Height="350" Width="525">
+        Title="Начальные Параметры" Height="350" Width="525"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <Label Content="Введите количество задач" HorizontalAlignment="Left" Margin="47,54,0,0" VerticalAlignment="Top" Height="26" Width="207"/>
         <Label Content="Введите количество процессоров" HorizontalAlignment="Left" Margin="47,117,0,0" VerticalAlignment="Top" Height="30" Width="207"/>

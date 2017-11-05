@@ -5,23 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_test"
         mc:Ignorable="d"
-        Title="Матрица параметров" Height="358.059" Width="459.574">
+        Title="Матрица параметров" Height="358.059" Width="459.574"
+        MinHeight="360" MinWidth="410"
+        ResizeMode="CanResizeWithGrip">
+
     <Grid>
-        <Label Content="Proc" HorizontalAlignment="Left" Margin="346,41,0,0" VerticalAlignment="Top" Width="50"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="175*"></ColumnDefinition>
+            <ColumnDefinition Width="100"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
 
-        <Label Content="TimeD" HorizontalAlignment="Left" Margin="346,144,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.52,2.903" Width="56"/>
+        <Label Grid.Column="1" Content="Proc" Margin="20,91,30,215" Height="23" Width="50" VerticalAlignment="Center"/>
 
-        <Border BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" Height="27" Margin="346,85,56,0" RenderTransformOrigin="0.503,-0.6">
-            <TextBlock TextAlignment="Center" FontSize="13" Name="ProcCountTextBlock"></TextBlock>
-        </Border>
+        <TextBox Grid.Column="1" Margin="20,121,30,185" TextWrapping="Wrap" Name="ProcCountTextBox" Height="23" Width="50" VerticalAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
 
-        <Border BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" Height="27" Margin="346,193,56,0">
-            <TextBlock TextAlignment="Center" FontSize="13" Name="DirectTimeTextBlock"></TextBlock>
-        </Border>
+        <Label Grid.Column="1" Content="TimeD" Margin="20,167,30,139" Height="23" Width="50" VerticalAlignment="Center"/>
 
-        <Border BorderBrush="Black" BorderThickness="1" Margin="10,6,112,12" Height="307">
-            <TextBlock TextAlignment="Center" FontSize="12" Name="ResultTextBlock"></TextBlock>
-        </Border>
+        <TextBox Grid.Column="1" Margin="20,197,30,109" TextWrapping="Wrap" Name="DirectTimeTextBox" Height="23" Width="50" VerticalAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+
+        <TextBox Margin="10" TextWrapping="NoWrap" Name="ParametrsResults"/>
+
+        <Button Content="Schedule" Grid.Column="1" Margin="0,0,15,10" Width="80" Click="MakeShedule" Height="23" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+        <Button Content="Back" Grid.Column="1" HorizontalAlignment="Left" Margin="5,10,0,0" VerticalAlignment="Top" Width="80" Height="23" Click="GoBack"/>
 
     </Grid>
 </Window>
