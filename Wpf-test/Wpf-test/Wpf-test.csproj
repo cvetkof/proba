@@ -54,6 +54,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="SheduleWindow.xaml.cs">
+      <DependentUpon>SheduleWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TaskClass.cs" />
     <Page Include="ParametersWindow.xaml">
       <SubType>Designer</SubType>
@@ -76,6 +79,10 @@
       <DependentUpon>SettingWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="SheduleWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

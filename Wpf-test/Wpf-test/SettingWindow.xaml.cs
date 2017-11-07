@@ -31,11 +31,11 @@ namespace Wpf_test
 
             var parametesWindow = new ParametersWindow(settingsParametrs); // Создание объекта нового окна с параметрами
 
-            parametesWindow.Owner = this;
+            this.Hide(); //Закрытие окна с настройками 
+
+            //parametesWindow.Owner = this;
             parametesWindow.ShowDialog(); // Открытие окна с параметрами
 
-            //this.Close(); //Закрытие окна с настройками 
-            
         }
 
         private void EnterValueManuallyButton_Click(object sender, RoutedEventArgs e)
@@ -44,11 +44,10 @@ namespace Wpf_test
 
             var parametesWindow = new ParametersWindow(settingsParametrs); // Создание объекта нового окна с параметрами
 
-            parametesWindow.Owner = this;
-            parametesWindow.ShowDialog(); // Открытие окна с параметрами
+            this.Hide(); //Закрытие окна с настройками 
 
-            this.Close(); //Закрытие окна с настройками 
-
+            //parametesWindow.Owner = this;
+            parametesWindow.Show(); // Открытие окна с параметрами
         }
 
         private SettingsParametrs GetSettingsParametrs(Enums.InputType inputType) // метод, присваивающий полям объкта значения,

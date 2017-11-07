@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Матрица параметров" Height="358.059" Width="459.574"
         MinHeight="360" MinWidth="410"
-        ResizeMode="CanResizeWithGrip">
+        WindowStartupLocation="CenterScreen">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -20,14 +20,14 @@
 
         <Label Grid.Column="1" Content="Proc" Margin="20,91,30,215" Height="23" Width="50" VerticalAlignment="Center"/>
 
-        <TextBox Grid.Column="1" Margin="20,121,30,185" TextWrapping="Wrap" Name="ProcCountTextBox" Height="23" Width="50" VerticalAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+        <TextBox Grid.Column="1" Margin="20,119,30,185" TextWrapping="Wrap" Name="ProcCountTextBox" Height="23" Width="50" VerticalAlignment="Center" IsReadOnly="True" BorderBrush="Black" TextAlignment="Center"/>
 
         <Label Grid.Column="1" Content="TimeD" Margin="20,167,30,139" Height="23" Width="50" VerticalAlignment="Center"/>
 
-        <TextBox Grid.Column="1" Margin="20,197,30,109" TextWrapping="Wrap" Name="DirectTimeTextBox" Height="23" Width="50" VerticalAlignment="Center" IsReadOnly="True" BorderBrush="Black"/>
+        <TextBox Grid.Column="1" Margin="20,195,30,109" TextWrapping="Wrap" Name="DirectTimeTextBox" Height="23" Width="50" VerticalAlignment="Center" IsReadOnly="True" BorderBrush="Black" TextAlignment="Center"/>
 
-        <TextBox Margin="10" TextWrapping="NoWrap" Name="ParametrsResults"/>
-
+        <TextBox Margin="10" TextWrapping="NoWrap" Name="ParametrsFirstResults" BorderBrush="Black" VerticalScrollBarVisibility="Auto"/>
+        
         <Button Content="Schedule" Grid.Column="1" Margin="0,0,15,10" Width="80" Click="MakeShedule" Height="23" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
         <Button Content="Back" Grid.Column="1" HorizontalAlignment="Left" Margin="5,10,0,0" VerticalAlignment="Top" Width="80" Height="23" Click="GoBack"/>
 
