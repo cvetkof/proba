@@ -14,7 +14,6 @@ namespace Wpf_test
 
         public double Importance { get; set; }
 
-        public double RelativityImportance { get; set; }
-        
+        public double RelativityImportance { get; set; }        
     }
 }

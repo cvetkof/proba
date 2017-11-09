@@ -31,7 +31,7 @@ namespace Wpf_test
 
             var parametesWindow = new ParametersWindow(settingsParametrs); // Создание объекта нового окна с параметрами
 
-            this.Hide(); //Закрытие окна с настройками 
+            this.Close(); //Закрытие окна с настройками 
 
             //parametesWindow.Owner = this;
             parametesWindow.ShowDialog(); // Открытие окна с параметрами
@@ -44,7 +44,7 @@ namespace Wpf_test
 
             var parametesWindow = new ParametersWindow(settingsParametrs); // Создание объекта нового окна с параметрами
 
-            this.Hide(); //Закрытие окна с настройками 
+            this.Close(); //Закрытие окна с настройками 
 
             //parametesWindow.Owner = this;
             parametesWindow.Show(); // Открытие окна с параметрами
@@ -60,10 +60,10 @@ namespace Wpf_test
             double directTimeTextBoxValue = Convert.ToDouble(DirectTimeTextBox.Text);
 
             var settingParametrs = new SettingsParametrs();
-            settingParametrs.TaskCounts = taskCountTextBoxValue; //количество задач 
             settingParametrs.ProcCount = procCountTextBoxValue; //количество процессоров
             settingParametrs.DirectTime = directTimeTextBoxValue; //директивное время
             settingParametrs.InputType = inputType; // тип ввода значений матрицы
+            settingParametrs.TaskCounts = taskCountTextBoxValue; // количество задач
 
             return settingParametrs;
         }

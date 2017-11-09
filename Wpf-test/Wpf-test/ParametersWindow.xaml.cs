@@ -33,7 +33,7 @@ namespace Wpf_test
             GenerateTable(settingsParametrs);
         }
 
-        public void GenerateTable(SettingsParametrs settingsParametrs)
+        private void GenerateTable(SettingsParametrs settingsParametrs)
         {
             if (settingsParametrs.InputType == Enums.InputType.Manually)
             {
@@ -41,9 +41,9 @@ namespace Wpf_test
             }
             else
             {
-                Random rand = new Random();
                 TaskClass[] taskArray = new TaskClass[settingsParametrs.TaskCounts]; // массив объектов, каждый из которых представляет задачу
-                
+                Random rand = new Random();
+
                 for (int count = 0; count < settingsParametrs.TaskCounts; count++)
                 {
                     taskArray[count] = new TaskClass(); //создаю объкты
@@ -51,10 +51,10 @@ namespace Wpf_test
 
                 for(int count = 0; count < settingsParametrs.TaskCounts; count++)
                 {
-                    taskArray[count].TimeToStart = rand.Next(1,5400);// полю объекта (TimeToStart) присваиваю рандомное значение от 1с до 1ч30мин
+                    taskArray[count].TimeToStart = rand.Next(1, 5400);// полю объекта (TimeToStart) присваиваю рандомное значение от 1с до 1ч30мин
                     taskArray[count].TimeToWork = rand.Next(1, 420);// полю объекта (TimeToWork) присваиваю рандомное значение от 1c до 7мин
                     taskArray[count].Importance = rand.Next(1, 100);// полю объекта (Impotyance) присваиваю рандомное значение от 1 до 100
-                    
+
                     ParametrsFirstResults.AppendText("время поступления " + (count + 1) + "-ой задачи - " + Convert.ToString(taskArray[count].TimeToStart) + "\n");
                     ParametrsFirstResults.AppendText("время обработки " + (count + 1) + "-ой задачи    - " + Convert.ToString(taskArray[count].TimeToWork) + "\n");
                     ParametrsFirstResults.AppendText("важность " + (count + 1) + "-ой задачи                  - " + Convert.ToString(taskArray[count].Importance) + "\n\n");                        
@@ -62,14 +62,14 @@ namespace Wpf_test
             }
         }
 
-        public void GoBack(object sender, RoutedEventArgs e)
+        private void GoBack(object sender, RoutedEventArgs e)
         {
             var mainWindow = new MainWindow();
             mainWindow.Show();
             this.Close();
         }
 
-        public void MakeShedule(object sender, RoutedEventArgs e)
+        private void MakeShedule(object sender, RoutedEventArgs e)
         {
             var sheduleWindow = new SheduleWindow();
             sheduleWindow.ShowDialog();
