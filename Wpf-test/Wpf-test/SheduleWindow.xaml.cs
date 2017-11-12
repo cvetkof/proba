@@ -22,7 +22,28 @@ namespace Wpf_test
         public SheduleWindow()
         {
             InitializeComponent();
+
+            var list = TaskManagerClass.ListTasks;
+           
         }
+
+        public void FindImportance()
+        {
+            var tasksList = TaskManagerClass.ListTasks;
+
+            foreach(var task in tasksList)
+            {
+                task.RelativityImportance = Math.Pow(task.Importance, 2) / task.TimeToWork;
+            }
+            
+        }
+
+        public void Method2()
+        {
+
+        }
+
+
 
     }
 

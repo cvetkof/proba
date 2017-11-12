@@ -58,6 +58,7 @@
       <DependentUpon>SheduleWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="TaskClass.cs" />
+    <Compile Include="TaskManagerClass.cs" />
     <Page Include="ParametersWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
