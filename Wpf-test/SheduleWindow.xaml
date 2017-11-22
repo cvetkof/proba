@@ -1,0 +1,15 @@
+﻿<Window x:Class="Wpf_test.SheduleWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf_test"
+        mc:Ignorable="d"
+        Title="SheduleWindow" Height="300" Width="300"
+        MinHeight="300" MinWidth="300"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <TextBox Margin="10" TextWrapping="NoWrap" BorderBrush="Black" Name="ParametrsSecondResult" IsReadOnly="True" VerticalScrollBarVisibility="Auto" />
+
+    </Grid>
+</Window>

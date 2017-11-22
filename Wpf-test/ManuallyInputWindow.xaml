@@ -1,0 +1,21 @@
+﻿<Window x:Class="Wpf_test.ManuallyInputWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf_test"
+        mc:Ignorable="d"
+        Title="ManuallyInputWindow" Height="200" Width="300">
+    <Grid>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="95,79,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="53" BorderBrush="Black" Name="TimeToStartTextBox"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="153,79,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="53" BorderBrush="Black" Name="TimeToWorkTextBox"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="211,79,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="53" BorderBrush="Black" Name="ImportanceTextBox"/>
+        <TextBlock HorizontalAlignment="Left" Margin="20,79,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="23" Width="53" Name="NumberTask"/>
+        <TextBlock HorizontalAlignment="Left" Margin="20,20,0,0" TextWrapping="Wrap" Text="Ввдеите параметры задачи" TextAlignment="Center" VerticalAlignment="Top" Width="244" Height="20"/>
+        <TextBlock HorizontalAlignment="Left" Margin="95,58,0,0" TextWrapping="Wrap" Text="Tн" VerticalAlignment="Top" Width="53" TextAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="153,58,0,0" TextWrapping="Wrap" Text="t обр" VerticalAlignment="Top" Width="53" TextAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="211,58,0,0" TextWrapping="Wrap" Text="W" VerticalAlignment="Top" Width="53" TextAlignment="Center"/>
+        <Button Content="OK" HorizontalAlignment="Left" Margin="172,118,0,0" VerticalAlignment="Top" Width="92" Height="33" Click="Button_Click"/>
+
+    </Grid>
+</Window>

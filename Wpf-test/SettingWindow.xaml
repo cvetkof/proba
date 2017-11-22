@@ -1,0 +1,24 @@
+﻿<Window x:Class="Wpf_test.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf_test"
+        mc:Ignorable="d"
+        Title="Начальные Параметры" Height="350" Width="525"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Label Content="Введите количество задач" HorizontalAlignment="Left" Margin="47,54,0,0" VerticalAlignment="Top" Height="26" Width="207"/>
+        <Label Content="Введите количество процессоров" HorizontalAlignment="Left" Margin="47,117,0,0" VerticalAlignment="Top" Height="30" Width="207"/>
+        <Label Content="Введите директивное время (сек)" HorizontalAlignment="Left" Margin="47,179,0,0" VerticalAlignment="Top" Width="207"/>
+
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="259,54,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="217" Text="1" Name="TaskCountTextBox" BorderBrush="Black"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="259,117,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="217" Name="ProcCountTextBox" BorderBrush="Black"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="259,179,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="217" Name="DirectTimeTextBox" BorderBrush="Black"/>
+        
+        <Button Content="Сгенерировать случайные значения" HorizontalAlignment="Left" Margin="47,229,0,0" VerticalAlignment="Top" Width="207" Height="48" Name="GenerateRandValueButton" Click="GenerateRandValueButton_Click"/>
+        <Button Content="Ввести значения вручную" HorizontalAlignment="Left" Margin="259,229,0,0" VerticalAlignment="Top" Width="217" Height="48" Name="EnterValueManuallyButton" Click="EnterValueManuallyButton_Click"/>
+
+    </Grid>
+</Window>
