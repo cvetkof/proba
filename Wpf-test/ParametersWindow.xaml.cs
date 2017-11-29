@@ -35,12 +35,11 @@ namespace Wpf_test
 
         private void GenerateTable(SettingsParametrs settingsParametrs)
         {
-
                 if(settingsParametrs.InputType == Enums.InputType.Random)
                 {
                     Random rand = new Random();
 
-                    TaskManagerClass.InitializeTaskArray();
+                    TaskManagerClass.InitializeListTasks();
 
                     for (int count = 0; count < settingsParametrs.TaskCounts; count++)
                     {
@@ -71,8 +70,6 @@ namespace Wpf_test
                         //ParametrsFirstResults.AppendText("порядковый номер - " + TaskManagerClass.ListTasks[count].IndexNumber + "\n\n");
                     }
                 }
-
-                
         }
 
         private void GoBack(object sender, RoutedEventArgs e)

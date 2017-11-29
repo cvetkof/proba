@@ -22,9 +22,13 @@ namespace Wpf_test
         public SheduleWindow()
         {
             InitializeComponent();
-            FindRelativityImportance();
-            SortRelativityImportance();
-            //FirstInsert();
+            FindRelativityImportance(); // поиск относительной важности задач
+            FindTimeToEnd(); // поис время окончания каждой задачи
+            SortRelativityImportance(); // сортировка списка задач по убыванию относительной важности
+            FirstInsert(); // вставка первой задачи в список-результат
+            OutputResultListTasks();
+            LeftMost(TaskManagerClass.ResultListTasks.Count); // поис крайней левой задачи с которой пересекается очередная
+
         }
 
         public void FindRelativityImportance()
@@ -35,54 +39,69 @@ namespace Wpf_test
             }          
         }
 
-        public void SortRelativityImportance()
+        public void FindTimeToEnd()
         {
-
-            TaskManagerClass.ListTasks = TaskManagerClass.ListTasks.OrderByDescending(l => l.RelativityImportance).ToList();
-
-            //for (int i = 0; i < TaskManagerClass.ListTasks.Count; i++)
-            //    ParametrsSecondResult.AppendText("удельная важность " + TaskManagerClass.ListTasks[i].IndexNumber + "-ой задачи - " + TaskManagerClass.ListTasks[i].RelativityImportance + "\n\n");
-
-            //ParametrsSecondResult.AppendText("\n\n");
-
-            //for (int i = 0; i < TaskManagerClass.ListTasks.Count; i++)
-            //{
-            //    ParametrsSecondResult.AppendText("важность " + TaskManagerClass.ListTasks[i].IndexNumber + "-ой задачи - " + TaskManagerClass.ListTasks[i].Importance + "\n\n");
-            //}
+            foreach(var task in TaskManagerClass.ListTasks)
+            {
+                task.TimeToEnd = task.TimeToStart + task.TimeToWork;
+            }
         }
 
-        //public void FillingResultListTasks()
-        //{
-        //    ResultShedule.InitialezeResultListTasks();
-        //}
-
-        //public void FirstInsert() // вставка первой задачи в результат
-        //{
-        //    ResultShedule.ResultListTasks[0] = TaskManagerClass.ListTasks[0];
-        //}
-
-        public void NextInsert(int next)
+        public void SortRelativityImportance()
         {
-            List<int> number = new List<int>();
+            TaskManagerClass.ListTasks = TaskManagerClass.ListTasks.OrderByDescending(l => l.RelativityImportance).ToList();
+        }
 
+        public void FirstInsert() // вставка первой задачи в список-результат
+        {
+            TaskManagerClass.InitializeResultListTasks();
+            TaskManagerClass.ResultListTasks.Add(TaskManagerClass.ListTasks[0]);
+        }
+
+        public void OutputResultListTasks() // метод вывода ResultListTasks
+        {
+            for(int task = 0; task < TaskManagerClass.ResultListTasks.Count; task++)
+            {
+                ResultTasksListTextBox.AppendText("Время поступления " + (task + 1) + "-ой задачи - " + TaskManagerClass.ResultListTasks[task].TimeToStart + "\n");
+                ResultTasksListTextBox.AppendText("Время обработки  " + (task + 1) + "-ой задачи - " + TaskManagerClass.ResultListTasks[task].TimeToWork + "\n");
+                ResultTasksListTextBox.AppendText("Важность " + (task + 1) + "-ой задачи - " + TaskManagerClass.ResultListTasks[task].Importance + "\n");
+                ResultTasksListTextBox.AppendText("Порядковый номер " + (task + 1) + "-ой задачи - " + TaskManagerClass.ResultListTasks[task].IndexNumber + "\n");
+            }
+        }
+
+        public void LeftMost(int next) // метод, возвращающий крайнюю левую задачу 
+        {
+            List<TaskClass> number = new List<TaskClass>();
+
+            // next - количество задач в ResultTaskList и в тоже время номер очередной "пришедшей" задачи
             for (int i = 0; i < next; i++)
             {
                 if (((TaskManagerClass.ListTasks[next].TimeToStart < TaskManagerClass.ListTasks[i].TimeToEnd) &&
-                    (TaskManagerClass.ListTasks[next].TimeToStart > TaskManagerClass.ListTasks[i].TimeToStart)) ||
+                    (TaskManagerClass.ListTasks[next].TimeToStart >= TaskManagerClass.ListTasks[i].TimeToStart)) ||
                     ((TaskManagerClass.ListTasks[next].TimeToEnd > TaskManagerClass.ListTasks[i].TimeToStart) &&
-                    (TaskManagerClass.ListTasks[next].TimeToEnd < TaskManagerClass.ListTasks[i].TimeToEnd)))
+                    (TaskManagerClass.ListTasks[next].TimeToEnd <= TaskManagerClass.ListTasks[i].TimeToEnd)))
                 {
-                    number.Add(i);
+                    number.Add(TaskManagerClass.ListTasks[i]); // в списке number храняться номера задач с которыми
+                                                               // пересекается очередная "пришедшая" 
+                }
+            }
+
+            if (number.Count != 0)
+            {
+                var min = number[0];
+                if (number.Count >= 2)
+                {
+                    for (int count = 1; count < number.Count; count++)
+                    {
+                        if (number[count].TimeToStart < min.TimeToStart) min = number[count];
+                    }// в min хранится первая задача с которой пересекается очередная "пришедшая" задача
                 }
             }
         }
 
-        //public void P1() // поиск крайней левой задачи с которой он пересекается
-        //{
-        //    for (int i = 0; i < ResultShedule.ResultListTasks.Count; i++)
-        //    {
+        public void InsertionCapability()
+        {
 
-        //    }
-        //}
+        }
     }
 }

@@ -57,7 +57,6 @@
     <Compile Include="ManuallyInputWindow.xaml.cs">
       <DependentUpon>ManuallyInputWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ResultShedule.cs" />
     <Compile Include="SheduleWindow.xaml.cs">
       <DependentUpon>SheduleWindow.xaml</DependentUpon>
     </Compile>

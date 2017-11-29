@@ -20,7 +20,7 @@ namespace Wpf_test
     /// </summary>
     public partial class MainWindow : Window
     {
-        private int _openedManuallyWindows = 0;
+        public int _openedManuallyWindows = 0; // счетчик окон
         public MainWindow()
         {
             InitializeComponent();
@@ -37,11 +37,12 @@ namespace Wpf_test
 
         private void EnterValueManuallyButton_Click(object sender, RoutedEventArgs e)
         {
-            TaskManagerClass.InitializeTaskArray();
-
+            TaskManagerClass.InitializeListTasks();
 
             var manuallyInpunWindow = new ManuallyInputWindow();
             this._openedManuallyWindows++;
+            manuallyInpunWindow.NumberTask.Text = Convert.ToString(this._openedManuallyWindows);
+            manuallyInpunWindow.NumberTask_Copy.Text = "-ая задача:";
             manuallyInpunWindow.Show();
             manuallyInpunWindow.Closed += ManuallyInpunWindow_Closed;
             
@@ -56,6 +57,8 @@ namespace Wpf_test
             {
                 var manuallyInpunWindow = new ManuallyInputWindow();
                 this._openedManuallyWindows++;
+                manuallyInpunWindow.NumberTask.Text = Convert.ToString(this._openedManuallyWindows);
+                manuallyInpunWindow.NumberTask_Copy.Text = "-ая задача:";
                 manuallyInpunWindow.Show();
                 manuallyInpunWindow.Closed += ManuallyInpunWindow_Closed;
             }

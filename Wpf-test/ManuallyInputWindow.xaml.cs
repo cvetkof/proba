@@ -19,33 +19,23 @@ namespace Wpf_test
     /// </summary>
     public partial class ManuallyInputWindow : Window
     {
-        //private readonly SettingsParametrs _settingsParametrs;
         public ManuallyInputWindow()
         {
             InitializeComponent();
-            //this._settingsParametrs = settingsParametrs;
-            //TaskManagerClass.InitializeTaskArray();
         }
-
-        public void FillTaskValue()
+        private void OK_Button_Click(object sender, RoutedEventArgs e)
         {
 
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            
             var task = new TaskClass
             {
                 TimeToStart = Convert.ToInt16(this.TimeToStartTextBox.Text),
                 TimeToWork = Convert.ToInt16(this.TimeToWorkTextBox.Text),
-                Importance = Convert.ToInt16(this.ImportanceTextBox.Text)
+                Importance = Convert.ToInt16(this.ImportanceTextBox.Text),
+                IndexNumber = Convert.ToInt16(NumberTask.Text)
             };
 
             TaskManagerClass.ListTasks.Add(task);
-            //var manuallyInpunWindow = new ManuallyInputWindow();
-           // manuallyInpunWindow.Show();
             this.Close();
-        }        
+        }
     }
 }

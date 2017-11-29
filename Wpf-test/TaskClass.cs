@@ -14,11 +14,6 @@ namespace Wpf_test
 
         public int TimeToEnd { get; set; }
 
-        public TaskClass()
-        {
-            TimeToEnd = TimeToStart + TimeToWork;
-        }
-
         public double Importance { get; set; }
 
         public double RelativityImportance { get; set; }

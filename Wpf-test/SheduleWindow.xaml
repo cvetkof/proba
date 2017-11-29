@@ -9,7 +9,7 @@
         MinHeight="300" MinWidth="300"
         WindowStartupLocation="CenterScreen">
     <Grid>
-        <TextBox Margin="10" TextWrapping="NoWrap" BorderBrush="Black" Name="ParametrsSecondResult" IsReadOnly="True" VerticalScrollBarVisibility="Auto" />
+        <TextBox Margin="10" TextWrapping="NoWrap" BorderBrush="Black" Name="ResultTasksListTextBox" IsReadOnly="True" VerticalScrollBarVisibility="Auto" />
 
     </Grid>
 </Window>
