@@ -19,7 +19,9 @@ namespace Wpf_test
     /// </summary>
     public partial class SheduleWindow : Window
     {
-        public SheduleWindow()
+
+        private TaskClass _min;
+        public SheduleWindow(SettingsParametrs settingsParametrs)
         {
             InitializeComponent();
             FindRelativityImportance(); // поиск относительной важности задач
@@ -28,7 +30,7 @@ namespace Wpf_test
             FirstInsert(); // вставка первой задачи в список-результат
             OutputResultListTasks();
             LeftMost(TaskManagerClass.ResultListTasks.Count); // поис крайней левой задачи с которой пересекается очередная
-
+            InsertionCapability(settingsParametrs);
         }
 
         public void FindRelativityImportance()
@@ -88,20 +90,21 @@ namespace Wpf_test
 
             if (number.Count != 0)
             {
-                var min = number[0];
+                _min = number[0];
                 if (number.Count >= 2)
                 {
                     for (int count = 1; count < number.Count; count++)
                     {
-                        if (number[count].TimeToStart < min.TimeToStart) min = number[count];
+                        if (number[count].TimeToStart < _min.TimeToStart) _min = number[count];
                     }// в min хранится первая задача с которой пересекается очередная "пришедшая" задача
                 }
             }
         }
 
-        public void InsertionCapability()
+        public void InsertionCapability(SettingsParametrs settingsParametrs)
         {
-
+            var X = settingsParametrs.DirectTime - _min.TimeToEnd;
+            
         }
     }
 }

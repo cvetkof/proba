@@ -32,7 +32,6 @@ namespace Wpf_test
             var parametesWindow = new ParametersWindow(settingsParametrs);
             this.Close();
             parametesWindow.Show();
-
         }
 
         private void EnterValueManuallyButton_Click(object sender, RoutedEventArgs e)

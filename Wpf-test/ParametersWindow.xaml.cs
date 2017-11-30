@@ -76,13 +76,13 @@ namespace Wpf_test
         {
             var mainWindow = new MainWindow();
             mainWindow.Show();
-            this.Close();
-            
+            this.Close();            
         }
 
         private void MakeShedule(object sender, RoutedEventArgs e)
         {
-            var sheduleWindow = new SheduleWindow();
+            var settingsParametrs = new SettingsParametrs();
+            var sheduleWindow = new SheduleWindow(settingsParametrs);
             //this.WindowState = WindowState.Maximized;
             sheduleWindow.Show();
         }
