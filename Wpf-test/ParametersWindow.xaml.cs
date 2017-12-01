@@ -19,10 +19,13 @@ namespace Wpf_test
     /// </summary>
     public partial class ParametersWindow : Window
     {
+        private SettingsParametrs _settingsParametrs;
         public ParametersWindow(SettingsParametrs settingsParametrs)
         {
+            this._settingsParametrs = settingsParametrs;
             InitializeComponent();
             FillSettingsValues(settingsParametrs);
+
         }
 
         private void FillSettingsValues(SettingsParametrs settingsParametrs)
@@ -81,8 +84,8 @@ namespace Wpf_test
 
         private void MakeShedule(object sender, RoutedEventArgs e)
         {
-            var settingsParametrs = new SettingsParametrs();
-            var sheduleWindow = new SheduleWindow(settingsParametrs);
+            //var settingsParametrs = new SettingsParametrs();
+            var sheduleWindow = new SheduleWindow(this._settingsParametrs);
             //this.WindowState = WindowState.Maximized;
             sheduleWindow.Show();
         }

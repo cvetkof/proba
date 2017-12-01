@@ -103,7 +103,7 @@ namespace Wpf_test
 
         public void InsertionCapability(SettingsParametrs settingsParametrs)
         {
-            var X = settingsParametrs.DirectTime - _min.TimeToEnd;
+            var x = settingsParametrs.DirectTime - _min.TimeToEnd;
             
         }
     }
