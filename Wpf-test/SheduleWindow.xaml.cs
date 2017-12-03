@@ -141,6 +141,7 @@ namespace Wpf_test
 
             bool firstCheck = x >= TaskManagerClass.ListTasks[next].TimeToWork;
             bool secondCheck = y > TaskManagerClass.ListTasks[next].TimeToWork;
+
             if (firstCheck && secondCheck)
             {
                 return true;
