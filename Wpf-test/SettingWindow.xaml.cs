@@ -76,13 +76,16 @@ namespace Wpf_test
 
             int procCountTextBoxValue = Convert.ToInt16(ProcCountTextBox.Text);
 
-            double directTimeTextBoxValue = Convert.ToDouble(DirectTimeTextBox.Text);
+            int directTimeTextBoxValue = Convert.ToInt16(DirectTimeTextBox.Text);
 
-            var settingParametrs = new SettingsParametrs();
-            settingParametrs.ProcCount = procCountTextBoxValue; //количество процессоров
-            settingParametrs.DirectTime = directTimeTextBoxValue; //директивное время
-            settingParametrs.InputType = inputType; // тип ввода значений матрицы
-            settingParametrs.TaskCounts = taskCountTextBoxValue; // количество задач
+            var settingParametrs = new SettingsParametrs()
+            {
+                ProcCount = procCountTextBoxValue, //количество процессоров
+                DirectTime = directTimeTextBoxValue, //директивное время
+                InputType = inputType, // тип ввода значений матрицы
+                TaskCounts = taskCountTextBoxValue // количество задач
+            };
+            
 
             return settingParametrs;
         }

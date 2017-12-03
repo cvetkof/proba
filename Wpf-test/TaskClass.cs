@@ -14,10 +14,10 @@ namespace Wpf_test
 
         public int TimeToEnd { get; set; }
 
-        public double Importance { get; set; }
+        public int Importance { get; set; }
 
         public double RelativityImportance { get; set; }
 
-        public double IndexNumber { get; set; }
+        public int IndexNumber { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace Wpf_test
 
         public int ProcCount { get; set; }
 
-        public double DirectTime { get; set; }
+        public int DirectTime { get; set; }
 
         public InputType InputType { get; set; }
     }
