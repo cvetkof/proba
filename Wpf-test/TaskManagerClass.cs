@@ -8,15 +8,27 @@ namespace Wpf_test
 {
     public static class TaskManagerClass
     {
-        public static List<TaskClass> ListTasks { get; set; } // список первоначального расположения задач
-        
-        public static List<TaskClass> ResultListTasks { get; set; } // результирующий список
+        /// <summary>
+        /// список первоначального расположения задач
+        /// </summary>
+        public static List<TaskClass> ListTasks { get; set; } 
 
-        public static void InitializeListTasks() // метод, инициализирующий элементы списка
+        /// <summary>
+        /// результирующий список
+        /// </summary>
+        public static List<TaskClass> ResultListTasks { get; set; }
+
+        /// <summary>
+        /// метод, инициализирующий элементы списка
+        /// </summary>
+        public static void InitializeListTasks()
         {
             ListTasks = new List<TaskClass>();
         }
 
+        /// <summary>
+        /// метод, инициализирующий элементы списка
+        /// </summary>
         public static void InitializeResultListTasks()
         {
             ResultListTasks = new List<TaskClass>();

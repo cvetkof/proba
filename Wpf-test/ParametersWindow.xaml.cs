@@ -32,6 +32,7 @@ namespace Wpf_test
         {
             ProcCountTextBox.Text = settingsParametrs.ProcCount.ToString();
             DirectTimeTextBox.Text = settingsParametrs.DirectTime.ToString();
+            DirectTimeTextBlock.Text = settingsParametrs.DirectTime.ToString();
 
             GenerateTable(settingsParametrs);
         }
@@ -66,7 +67,6 @@ namespace Wpf_test
                 {
                     for (int count = 0; count < settingsParametrs.TaskCounts; count++)
                     {
-                    
                         ParametrsFirstResults.AppendText("время поступления " + (count + 1) + "-ой задачи - " + TaskManagerClass.ListTasks[count].TimeToStart + "\n");
                         ParametrsFirstResults.AppendText("время обработки " + (count + 1) + "-ой задачи    - " + TaskManagerClass.ListTasks[count].TimeToWork + "\n");
                         ParametrsFirstResults.AppendText("важность " + (count + 1) + "-ой задачи                  - " + TaskManagerClass.ListTasks[count].Importance + "\n\n");

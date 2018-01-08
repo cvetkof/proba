@@ -12,11 +12,11 @@ namespace Wpf_test
 
         public int TimeToWork { get; set; }
 
-        public int TimeToEnd { get; set; }
+        public int TimeToEnd => TimeToStart + TimeToWork;
 
         public int Importance { get; set; }
 
-        public double RelativityImportance { get; set; }
+        public double RelativityImportance => Math.Round((Math.Pow(Importance, 2) / TimeToWork), 3);
 
         public int IndexNumber { get; set; }
     }
