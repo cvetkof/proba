@@ -25,14 +25,12 @@ namespace Wpf_test
             this._settingsParametrs = settingsParametrs;
             InitializeComponent();
             FillSettingsValues(settingsParametrs);
-
         }
 
         private void FillSettingsValues(SettingsParametrs settingsParametrs)
         {
             ProcCountTextBox.Text = settingsParametrs.ProcCount.ToString();
             DirectTimeTextBox.Text = settingsParametrs.DirectTime.ToString();
-            DirectTimeTextBlock.Text = settingsParametrs.DirectTime.ToString();
 
             GenerateTable(settingsParametrs);
         }
@@ -84,7 +82,6 @@ namespace Wpf_test
 
         private void MakeShedule(object sender, RoutedEventArgs e)
         {
-            //var settingsParametrs = new SettingsParametrs();
             var sheduleWindow = new SheduleWindow(this._settingsParametrs);
             //this.WindowState = WindowState.Maximized;
             sheduleWindow.Show();

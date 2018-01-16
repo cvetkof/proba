@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_test"
         mc:Ignorable="d"
-        Title="ParametersWindow" Height="360" Width="410"
-        MinHeight="360" MinWidth="410"
+        Title="ParametersWindow" Height="410" Width="410"
+        MinHeight="410" MinWidth="410"
         WindowStartupLocation="CenterScreen">
 
     <Grid>

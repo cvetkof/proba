@@ -5,11 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_test"
         mc:Ignorable="d"
-        Title="SheduleWindow" Height="300" Width="300"
-        MinHeight="300" MinWidth="300"
+        Title="SheduleWindow" Height="410" Width="410"
+        MinHeight="410" MinWidth="410"
         WindowStartupLocation="CenterScreen">
     <Grid>
-        <TextBox Margin="10" TextWrapping="NoWrap" BorderBrush="Black" Name="ResultTasksListTextBox" IsReadOnly="True" VerticalScrollBarVisibility="Auto" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="175*"></ColumnDefinition>
+            <ColumnDefinition Width="100"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBox Margin="10,10,10,10" TextWrapping="NoWrap" BorderBrush="Black" Name="ResultTasksListTextBox" IsReadOnly="True" VerticalScrollBarVisibility="Auto" />
+
+        <Button Content="Back" Grid.Column="1" Margin="0,10,15,0" Width="80" Click="GoBack" HorizontalAlignment="Right" Height="23" VerticalAlignment="Top"/>
+
+        <Label Grid.Column="1" Content="Proc" Margin="20,91,30,215" Height="23" Width="50" VerticalAlignment="Center"/>
+
+        <TextBox Grid.Column="1" Margin="20,120,30,184" TextWrapping="Wrap" Name="ProcCountTextBox" Height="25" Width="50" VerticalAlignment="Center" IsReadOnly="True" BorderBrush="Black" TextAlignment="Center"/>
+
+        <Label Grid.Column="1" Content="TimeD" Margin="20,167,30,139" Height="23" Width="50" VerticalAlignment="Center"/>
+
+        <TextBox Grid.Column="1" Margin="20,196,30,108" TextWrapping="Wrap" Name="DirectTimeTextBox" Height="25" Width="50" VerticalAlignment="Center" IsReadOnly="True" BorderBrush="Black" TextAlignment="Center"/>
 
     </Grid>
 </Window>

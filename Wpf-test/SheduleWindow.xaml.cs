@@ -25,22 +25,41 @@ namespace Wpf_test
         public SheduleWindow(SettingsParametrs settingsParametrs)
         {
             InitializeComponent();
+
+            FillSettingsValues(settingsParametrs);
             SortRelativityImportance(); // сортировка списка задач по убыванию относительной важности
             InsertFirstTask(); // вставка первой задачи в список-результат
 
             for (int i = 1; i < TaskManagerClass.ListTasks.Count; i++)
             {
-                //OutputResultListTasks();
                 if (_min.TimeToWork != 0)
-                // если есть "крайняя левая" задача с которой пересекается очередная, то:
+                // если есть пересечение (есть "крайняя левая" задача с которой пересекается очередная), то:
                 {
                     if (InsertionCapability(settingsParametrs, TaskManagerClass.ResultListTasks.Count, OverlappingTasks(TaskManagerClass.ResultListTasks.Count)))
                     // проверяется возможность вставки, и если вставка возможна, то:
                     {
                         ShiftTasks(settingsParametrs, TaskManagerClass.ResultListTasks.Count); // сдвиг задач
+                        ///////////////////////////////////////////////////////////////////////// вставка задачи
                     }
                 }
-            }            
+                else
+                {
+                    if (InsertionCapability(settingsParametrs, TaskManagerClass.ResultListTasks.Count, OverlappingTasks(TaskManagerClass.ResultListTasks.Count)))
+                    // проверяется возможность вставки, и если вставка возможна, то:
+                    {
+                        ///////////////////////////////////////////////////////////////////////// вставка задачи
+                    }
+
+                }
+            }
+
+            OutputResultListTasks();
+        }
+
+        private void FillSettingsValues(SettingsParametrs settingsParametrs)
+        {
+            ProcCountTextBox.Text = settingsParametrs.ProcCount.ToString();
+            DirectTimeTextBox.Text = settingsParametrs.DirectTime.ToString();
         }
 
         public void SortRelativityImportance()
@@ -218,6 +237,13 @@ namespace Wpf_test
                     }
                 }
             }
+        }
+
+        private void GoBack(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();
         }
     }
 }
