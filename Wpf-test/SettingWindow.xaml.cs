@@ -76,7 +76,7 @@ namespace Wpf_test
 
             int procCountTextBoxValue = Convert.ToInt16(ProcCountTextBox.Text);
 
-            int directTimeTextBoxValue = Convert.ToInt16(DirectTimeTextBox.Text);
+            double directTimeTextBoxValue = Convert.ToDouble(DirectTimeTextBox.Text);
 
             var settingParametrs = new SettingsParametrs()
             {
