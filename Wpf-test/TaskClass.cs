@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Wpf_test
 {
-    public class TaskClass //класс задач
+    /// <summary>
+    /// класс задач
+    /// </summary>
+    public class TaskClass 
     {
         public int TimeToStart { get; set; }
 
@@ -15,6 +18,8 @@ namespace Wpf_test
         public int TimeToEnd => TimeToStart + TimeToWork;
 
         public int Importance { get; set; }
+
+        public int NumberProc { get; set; }
 
         public double RelativityImportance => Math.Round((Math.Pow(Importance, 2) / TimeToWork), 3);
 

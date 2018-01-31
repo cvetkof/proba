@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="SheduleWindow" Height="410" Width="410"
         MinHeight="410" MinWidth="410"
-        WindowStartupLocation="CenterScreen">
+        >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="175*"></ColumnDefinition>

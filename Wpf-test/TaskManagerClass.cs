@@ -19,7 +19,12 @@ namespace Wpf_test
         public static List<TaskClass> ResultListTasks { get; set; }
 
         /// <summary>
-        /// метод, инициализирующий элементы списка
+        /// промежуточный список
+        /// </summary>
+        public static List<TaskClass> MiddleResultListTasks { get; set; }
+
+        /// <summary>
+        /// инициализация элементов списка
         /// </summary>
         public static void InitializeListTasks()
         {
@@ -27,11 +32,19 @@ namespace Wpf_test
         }
 
         /// <summary>
-        /// метод, инициализирующий элементы списка
+        /// инициализация элементов списка
         /// </summary>
         public static void InitializeResultListTasks()
         {
             ResultListTasks = new List<TaskClass>();
+        }
+
+        /// <summary>
+        /// инициализация элементов списка
+        /// </summary>
+        public static void InitializeMiddleResultListTasks()
+        {
+            MiddleResultListTasks = new List<TaskClass>();
         }
     }
 }
