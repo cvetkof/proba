@@ -26,7 +26,7 @@ namespace Wpf_test
         public SheduleWindow(SettingsParametrs settingsParametrs)
         {
             InitializeComponent();
-
+            FillSettingsValues(settingsParametrs);
             OutputResultListTasks();
 
             //Checking(settingsParametrs);
