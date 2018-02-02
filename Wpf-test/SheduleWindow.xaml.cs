@@ -28,7 +28,7 @@ namespace Wpf_test
             InitializeComponent();
             FillSettingsValues(settingsParametrs);
             OutputResultListTasks();
-
+            ProcResult(settingsParametrs);
             //Checking(settingsParametrs);
         }
 
@@ -59,6 +59,23 @@ namespace Wpf_test
             }
 
             ResultTasksListTextBox.AppendText("Количество задач на обработку = " + TaskManagerClass.ResultListTasks.Count + "\n\n");
+
+        }
+
+        public void ProcResult(SettingsParametrs settingsParametrs)
+        {
+            int count1 = 0;
+            for (int count = 0; count < settingsParametrs.ProcCount; count++)
+            {
+                for (int i = 0; i < TaskManagerClass.ResultListTasks.Count; i++)
+                {
+                    if ((count+1) == TaskManagerClass.ResultListTasks[i].NumberProc)
+                        count1++;
+                }
+
+                ResultTasksListTextBox.AppendText((count+1) + "-ый процессор - " + (count1) + " задач" + "\n");
+                count1 = 0;
+            }             
 
         }
 

@@ -124,6 +124,7 @@ namespace Wpf_test
                 TaskManagerClass.ResultListTasks.AddRange(TaskManagerClass.MiddleResultListTasks); // перенос из промежуточного в результирующий список элементов
                 TaskManagerClass.MiddleResultListTasks.Clear(); // удаление всех элементов промежуточного списка
                 DeleteTasks(); // удаление элементов выставленных в результирующий список из начального списка
+
             }
 
 
