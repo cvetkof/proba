@@ -31,7 +31,8 @@ namespace Wpf_test
                 TimeToStart = Convert.ToInt16(this.TimeToStartTextBox.Text),
                 TimeToWork = Convert.ToInt16(this.TimeToWorkTextBox.Text),
                 Importance = Convert.ToInt16(this.ImportanceTextBox.Text),
-                IndexNumber = Convert.ToInt16(NumberTask.Text)
+                IndexNumber = Convert.ToInt16(NumberTask.Text),
+                Guid = Guid.NewGuid()
             };
 
             TaskManagerClass.ListTasks.Add(task);

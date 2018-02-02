@@ -50,16 +50,16 @@ namespace Wpf_test
         /// </summary>
         public void OutputResultListTasks()
         {
-            ResultTasksListTextBox.AppendText("Количество задач на обработку = " + TaskManagerClass.ResultListTasks.Count + "\n\n");
-
             for (int task = 0; task < TaskManagerClass.ResultListTasks.Count; task++)
             {
-                ResultTasksListTextBox.AppendText("Время поступления " + (task + 1) + "-ой задачи - " + TaskManagerClass.ResultListTasks[task].TimeToStart + "\n");
-                ResultTasksListTextBox.AppendText("Время обработки  " + (task + 1) + "-ой задачи - " + TaskManagerClass.ResultListTasks[task].TimeToWork + "\n");
-                ResultTasksListTextBox.AppendText("Важность " + (task + 1) + "-ой задачи - " + TaskManagerClass.ResultListTasks[task].Importance + "\n");
-                ResultTasksListTextBox.AppendText("Порядковый номер " + (task + 1) + "-ой задачи - " + TaskManagerClass.ResultListTasks[task].IndexNumber + "\n");
+                ResultTasksListTextBox.AppendText((task + 1) + "\t" + Convert.ToString(TaskManagerClass.ResultListTasks[task].TimeToStart) + "\t" +
+                    Convert.ToString(TaskManagerClass.ResultListTasks[task].TimeToWork) + "\t" + Convert.ToString(TaskManagerClass.ResultListTasks[task].Importance) + "\t" +
+                    Convert.ToString(TaskManagerClass.ResultListTasks[task].NumberProc) + "\t" + Convert.ToString(TaskManagerClass.ResultListTasks[task].IndexNumber));
                 ResultTasksListTextBox.AppendText("\n");
             }
+
+            ResultTasksListTextBox.AppendText("Количество задач на обработку = " + TaskManagerClass.ResultListTasks.Count + "\n\n");
+
         }
 
         /// <summary>

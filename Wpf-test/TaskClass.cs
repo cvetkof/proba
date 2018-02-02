@@ -21,6 +21,8 @@ namespace Wpf_test
 
         public int NumberProc { get; set; }
 
+        public Guid Guid { get; set; }
+
         public double RelativityImportance => Math.Round((Math.Pow(Importance, 2) / TimeToWork), 3);
 
         public int IndexNumber { get; set; }

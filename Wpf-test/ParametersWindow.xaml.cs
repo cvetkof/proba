@@ -52,7 +52,8 @@ namespace Wpf_test
                             TimeToStart = rand.Next(1, 5400), // значение от 1с до  1ч 30мин
                             TimeToWork = rand.Next(1, 420), // значение от 1c до 7мин
                             Importance = rand.Next(1, 100), // значение от 1 до 100
-                            IndexNumber = count + 1
+                            IndexNumber = count + 1,
+                            Guid = Guid.NewGuid()
                         };
 
                         TaskManagerClass.ListTasks.Add(task);
@@ -91,9 +92,9 @@ namespace Wpf_test
             for (int procCount = 0; procCount < _settingsParametrs.ProcCount; procCount++) // цикл количества процессоров
             {
                 
-                InsertFirstTask();
+                //InsertFirstTask(procCount);
                 
-                for (int i = 1; i < TaskManagerClass.ListTasks.Count; i++)
+                for (int i = 0; i < TaskManagerClass.ListTasks.Count; i++)
                 {
 
                     FindLeft(OverlappingTasks(i));
@@ -122,8 +123,7 @@ namespace Wpf_test
 
                 TaskManagerClass.ResultListTasks.AddRange(TaskManagerClass.MiddleResultListTasks); // перенос из промежуточного в результирующий список элементов
                 TaskManagerClass.MiddleResultListTasks.Clear(); // удаление всех элементов промежуточного списка
-
-                // удаление элементов выставленных в результирующий список из начального списка
+                DeleteTasks(); // удаление элементов выставленных в результирующий список из начального списка
             }
 
 
@@ -143,8 +143,9 @@ namespace Wpf_test
         /// <summary>
         /// вставка первой задачи в список-результат
         /// </summary>
-        public void InsertFirstTask()
+        public void InsertFirstTask(int proc)
         {
+            TaskManagerClass.ListTasks[0].NumberProc = proc + 1;
             TaskManagerClass.MiddleResultListTasks.Add(TaskManagerClass.ListTasks[0]);
         }
 
@@ -370,5 +371,15 @@ namespace Wpf_test
             TaskManagerClass.MiddleResultListTasks = TaskManagerClass.MiddleResultListTasks.OrderBy(l => l.TimeToStart).ToList();
         }
 
+        /// <summary>
+        /// удаление совпадающих задач
+        /// </summary>
+        public void DeleteTasks()
+        {
+            for(int i = 0; i < TaskManagerClass.ResultListTasks.Count; i++)
+            {
+                TaskManagerClass.ListTasks.RemoveAll(p => p.Guid == TaskManagerClass.ResultListTasks[i].Guid);
+            }
+        }
     }
 }
