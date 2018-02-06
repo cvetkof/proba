@@ -85,24 +85,23 @@ namespace Wpf_test
 
         private void MakeShedule(object sender, RoutedEventArgs e)
         {
+            SetPBar();
             SortRelativityImportance();
             TaskManagerClass.InitializeMiddleResultListTasks();
             TaskManagerClass.InitializeResultListTasks();
 
             for (int procCount = 0; procCount < _settingsParametrs.ProcCount; procCount++) // цикл количества процессоров
-            {
-                
-                //InsertFirstTask(procCount);
-                
+            {                
                 for (int i = 0; i < TaskManagerClass.ListTasks.Count; i++)
                 {
+                    pBar.Value++;
 
                     FindLeft(OverlappingTasks(i));
 
                     if (_min.TimeToStart >= 0)
                     // если есть пересечение (есть "крайняя левая" задача с которой пересекается очередная), то:
                     {
-                        if (InsertionCapability(this._settingsParametrs, i, OverlappingTasks(i)))
+                        if (InsertionCapability(i, OverlappingTasks(i)))
                         // проверяется возможность вставки, и если вставка возможна, то:
                         {
                             ShiftTasks(i); // сдвиг задач
@@ -112,7 +111,7 @@ namespace Wpf_test
                     }
                     else // если нет пересечения
                     {
-                        if (InsertionCapability(this._settingsParametrs, i, OverlappingTasks(i)))
+                        if (InsertionCapability(i, OverlappingTasks(i)))
                         // проверяется возможность вставки, и если вставка возможна, то:
                         {
                             InsertionTask(i, procCount); // вставка задачи
@@ -124,7 +123,7 @@ namespace Wpf_test
                 TaskManagerClass.ResultListTasks.AddRange(TaskManagerClass.MiddleResultListTasks); // перенос из промежуточного в результирующий список элементов
                 TaskManagerClass.MiddleResultListTasks.Clear(); // удаление всех элементов промежуточного списка
                 DeleteTasks(); // удаление элементов выставленных в результирующий список из начального списка
-
+                _min = null;
             }
 
 
@@ -175,7 +174,10 @@ namespace Wpf_test
             }
             else
             {
-                _min.TimeToStart = -1;
+                _min = new TaskClass
+                {
+                    TimeToStart = -1
+                };
             }
         }
 
@@ -219,13 +221,13 @@ namespace Wpf_test
         /// <param name="next_task"> номер следующей задачи </param>
         /// <param name="list"> список задач с которыми пересекается очередная </param>
         /// <returns></returns>
-        public bool InsertionCapability(SettingsParametrs settingsParametrs, int next_task, List<TaskClass> list)
+        public bool InsertionCapability(int next_task, List<TaskClass> list)
         {
             double x;
 
             if (_min.TimeToStart == -1) // проверка вставки при отсутствии пересечения
             {
-                if (TaskManagerClass.ListTasks[next_task].TimeToEnd < settingsParametrs.DirectTime)
+                if (TaskManagerClass.ListTasks[next_task].TimeToEnd <= this._settingsParametrs.DirectTime)
                 {
                     return true;
                 }
@@ -237,22 +239,23 @@ namespace Wpf_test
             else // проверка вставки при наличии пересечения
             {
                 if (TaskManagerClass.ListTasks[next_task].TimeToStart >= _min.TimeToStart) //если время старта очередной >= 
-                                                                                      //времени старта крайней левой задачи, то
+                                                                                           //времени старта крайней левой задачи, то
                 {
-                    x = settingsParametrs.DirectTime - _min.TimeToEnd;
+                    x = this._settingsParametrs.DirectTime - _min.TimeToEnd;
 
                     double y = x;
+
                     for (int i = 0; i < TaskManagerClass.MiddleResultListTasks.Count; i++)
                     {
-                        if (TaskManagerClass.MiddleResultListTasks[i].TimeToStart > _min.TimeToStart)
+                        if (TaskManagerClass.MiddleResultListTasks[i].TimeToStart >= _min.TimeToEnd)
                         {
                             y -= TaskManagerClass.MiddleResultListTasks[i].TimeToWork;
                         }
                     }
 
-                    bool firstCheck = TaskManagerClass.ListTasks[next_task].TimeToEnd < settingsParametrs.DirectTime;
-                    bool secondCheck = x >= TaskManagerClass.ListTasks[next_task].TimeToWork;
-                    bool thirdCheck = y > TaskManagerClass.ListTasks[next_task].TimeToWork;
+                    bool firstCheck = TaskManagerClass.ListTasks[next_task].TimeToEnd <= this._settingsParametrs.DirectTime;
+                    bool secondCheck = TaskManagerClass.ListTasks[next_task].TimeToWork <= x;
+                    bool thirdCheck = TaskManagerClass.ListTasks[next_task].TimeToWork <= y;
 
                     if (firstCheck && secondCheck && thirdCheck)
                     {
@@ -266,12 +269,13 @@ namespace Wpf_test
                 else //если время старта очередной задачи < 
                      //времени старта крайней левой задачи, то
                 {
-                    x = settingsParametrs.DirectTime - TaskManagerClass.ListTasks[next_task].TimeToEnd;
+                    x = this._settingsParametrs.DirectTime - TaskManagerClass.ListTasks[next_task].TimeToEnd;
 
                     double y = x;
+
                     for (int i = 0; i < TaskManagerClass.MiddleResultListTasks.Count; i++)
                     {
-                        if (TaskManagerClass.MiddleResultListTasks[i].TimeToStart > _min.TimeToEnd)
+                        if (TaskManagerClass.MiddleResultListTasks[i].TimeToStart >= TaskManagerClass.ListTasks[next_task].TimeToEnd)
                         {
                             y -= TaskManagerClass.MiddleResultListTasks[i].TimeToWork;
                         }
@@ -283,9 +287,9 @@ namespace Wpf_test
                         sumTimeToWork += list[i].TimeToWork; // сумма времен работы задач с которыми пересекается очередная
                     }
 
-                    bool firstCheck = TaskManagerClass.ListTasks[next_task].TimeToEnd < settingsParametrs.DirectTime;
-                    bool secondCheck = x >= sumTimeToWork;
-                    bool thirdCheck = y > sumTimeToWork;
+                    bool firstCheck = TaskManagerClass.ListTasks[next_task].TimeToEnd < this._settingsParametrs.DirectTime;
+                    bool secondCheck = sumTimeToWork <= x;
+                    bool thirdCheck = sumTimeToWork <= y;
 
                     if (firstCheck && secondCheck && thirdCheck)
                     {
@@ -332,7 +336,6 @@ namespace Wpf_test
                        (TaskManagerClass.MiddleResultListTasks[i].TimeToStart < newTimeToStart))
                     {
                         TaskManagerClass.MiddleResultListTasks[i].TimeToStart = newTimeToStart;
-
                         newTimeToStart += TaskManagerClass.MiddleResultListTasks[i].TimeToWork;
                     }
                 }
@@ -381,6 +384,11 @@ namespace Wpf_test
             {
                 TaskManagerClass.ListTasks.RemoveAll(p => p.Guid == TaskManagerClass.ResultListTasks[i].Guid);
             }
+        }
+
+        public void Packaging()
+        {
+            
         }
     }
 }

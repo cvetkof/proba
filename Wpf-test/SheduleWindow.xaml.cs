@@ -27,9 +27,9 @@ namespace Wpf_test
         {
             InitializeComponent();
             FillSettingsValues(settingsParametrs);
-            OutputResultListTasks();
+            OutputResultListTasks(settingsParametrs);
             ProcResult(settingsParametrs);
-            //Checking(settingsParametrs);
+            Checking(settingsParametrs);
         }
 
         private void GoBack(object sender, RoutedEventArgs e)
@@ -48,7 +48,7 @@ namespace Wpf_test
         /// <summary>
         /// вывод результирующего списка
         /// </summary>
-        public void OutputResultListTasks()
+        public void OutputResultListTasks(SettingsParametrs settingsParametrs)
         {
             for (int task = 0; task < TaskManagerClass.ResultListTasks.Count; task++)
             {
@@ -58,23 +58,34 @@ namespace Wpf_test
                 ResultTasksListTextBox.AppendText("\n");
             }
 
-            ResultTasksListTextBox.AppendText("Количество задач на обработку = " + TaskManagerClass.ResultListTasks.Count + "\n\n");
+            double count = (Convert.ToDouble(TaskManagerClass.ResultListTasks.Count) / Convert.ToDouble(settingsParametrs.TaskCounts))*100;
+            var percent = Math.Round((count),2);
+            ResultTasksListTextBox.AppendText("\nКоличество задач на обработку = " + TaskManagerClass.ResultListTasks.Count + " (" + percent + "%)" + "\n\n");
 
         }
 
+        /// <summary>
+        /// какое количество задач на каждом процессоре
+        /// </summary>
+        /// <param name="settingsParametrs"></param>
         public void ProcResult(SettingsParametrs settingsParametrs)
         {
             int count1 = 0;
+            var count2 = settingsParametrs.DirectTime;
             for (int count = 0; count < settingsParametrs.ProcCount; count++)
             {
                 for (int i = 0; i < TaskManagerClass.ResultListTasks.Count; i++)
                 {
                     if ((count+1) == TaskManagerClass.ResultListTasks[i].NumberProc)
                         count1++;
+                    if((count+1) == TaskManagerClass.ResultListTasks[i].NumberProc)
+                        count2 -= TaskManagerClass.ResultListTasks[i].TimeToWork;
                 }
 
-                ResultTasksListTextBox.AppendText((count+1) + "-ый процессор - " + (count1) + " задач" + "\n");
+                var percent = Math.Round(((count2 / settingsParametrs.DirectTime) * 100),1); 
+                ResultTasksListTextBox.AppendText((count+1) + "-ый процессор - " + (count1) + " задач; время простоя - " + count2 + " (" + percent + "%)\n");
                 count1 = 0;
+                count2 = settingsParametrs.DirectTime;
             }             
 
         }
@@ -86,46 +97,53 @@ namespace Wpf_test
         {
             List<TaskClass> numbers = new List<TaskClass>();
 
-            int a = 0;
             double directTime = settingsParametrs.DirectTime;
 
-            for (int j = 0; j < TaskManagerClass.ResultListTasks.Count; j++)
+            for (int k = 0; k < settingsParametrs.ProcCount; k++) // цикол, количества процессоров
             {
-                for (int i = a; i < TaskManagerClass.ResultListTasks.Count; i++)
+                for (int j = 0; j < TaskManagerClass.ResultListTasks.Count; j++)
                 {
-                    if (i != j)
+                    for (int i = j+1; i < TaskManagerClass.ResultListTasks.Count; i++)
                     {
-                        bool intersectionRight = ((TaskManagerClass.ResultListTasks[j].TimeToStart < TaskManagerClass.ResultListTasks[i].TimeToEnd) &&
-                                                 (TaskManagerClass.ResultListTasks[j].TimeToStart >= TaskManagerClass.ResultListTasks[i].TimeToStart));
-
-                        bool intersectionLeft = ((TaskManagerClass.ResultListTasks[j].TimeToEnd <= TaskManagerClass.ResultListTasks[i].TimeToEnd) &&
-                                                (TaskManagerClass.ResultListTasks[j].TimeToEnd > TaskManagerClass.ResultListTasks[i].TimeToStart));
-
-                        bool intersectionRightLeft = ((TaskManagerClass.ResultListTasks[j].TimeToStart < TaskManagerClass.ResultListTasks[i].TimeToStart) &&
-                                                     (TaskManagerClass.ResultListTasks[j].TimeToEnd > TaskManagerClass.ResultListTasks[i].TimeToEnd));
-
-                        if (intersectionLeft || intersectionRight || intersectionRightLeft)
+                        if ((TaskManagerClass.ResultListTasks[i].NumberProc == k+1) && (TaskManagerClass.ResultListTasks[j].NumberProc == k+1))
                         {
-                            numbers.Add(TaskManagerClass.ResultListTasks[i]);
+                            bool intersectionRight = ((TaskManagerClass.ResultListTasks[j].TimeToStart < TaskManagerClass.ResultListTasks[i].TimeToEnd) &&
+                                                     (TaskManagerClass.ResultListTasks[j].TimeToStart >= TaskManagerClass.ResultListTasks[i].TimeToStart));
+
+                            bool intersectionLeft = ((TaskManagerClass.ResultListTasks[j].TimeToEnd <= TaskManagerClass.ResultListTasks[i].TimeToEnd) &&
+                                                    (TaskManagerClass.ResultListTasks[j].TimeToEnd > TaskManagerClass.ResultListTasks[i].TimeToStart));
+
+                            bool intersectionRightLeft = ((TaskManagerClass.ResultListTasks[j].TimeToStart < TaskManagerClass.ResultListTasks[i].TimeToStart) &&
+                                                         (TaskManagerClass.ResultListTasks[j].TimeToEnd > TaskManagerClass.ResultListTasks[i].TimeToEnd));
+
+                            if (intersectionLeft || intersectionRight || intersectionRightLeft)
+                            {
+                                numbers.Add(TaskManagerClass.ResultListTasks[j]);
+                            }
                         }
                     }
                 }
-
-                directTime -= TaskManagerClass.ResultListTasks[j].TimeToWork;
-
-                a++;
             }
 
-            if (numbers.Count > 0)
+            for(int i = 0; i < TaskManagerClass.ResultListTasks.Count; i++)
+            {
+                if (TaskManagerClass.ResultListTasks[i].TimeToEnd > directTime)
+                    directTime = -1;
+                break;
+            }
+
+            if ((numbers.Count > 0) && (directTime == -1))
             {
                 ResultTasksListTextBox.AppendText("\n\n\nРабота алгоритма НЕВЕРНА, имеются пересечения!");
+                for (int i = 0; i < numbers.Count; i++)
+                {
+                    ResultTasksListTextBox.AppendText("\n\nПересекающиеся задачи:\n" + numbers[i].IndexNumber + "\n");
+                }
             }
             else
             {
                 ResultTasksListTextBox.AppendText("\n\nРабота алгоритма ВЕРНА, персечений нет");
-                ResultTasksListTextBox.AppendText("\n\nВремя простоя процессора равно - " + (directTime));
             }
-
         }
     }
 }
