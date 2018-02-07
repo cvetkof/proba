@@ -21,6 +21,7 @@ namespace Wpf_test
     {
         private SettingsParametrs _settingsParametrs;
         private TaskClass _min = new TaskClass(); //в min хранится первая задача с которой пересекается очередная "пришедшая" задача
+        int _sumWFirst = 0;
 
         public ParametersWindow(SettingsParametrs settingsParametrs)
         {
@@ -90,12 +91,14 @@ namespace Wpf_test
             TaskManagerClass.InitializeMiddleResultListTasks();
             TaskManagerClass.InitializeResultListTasks();
 
+            SumWFirst();
+
             for (int procCount = 0; procCount < _settingsParametrs.ProcCount; procCount++) // цикл количества процессоров
             {                
                 for (int i = 0; i < TaskManagerClass.ListTasks.Count; i++)
                 {
                     pBar.Value++;
-
+                 
                     FindLeft(OverlappingTasks(i));
 
                     if (_min.TimeToStart >= 0)
@@ -127,9 +130,15 @@ namespace Wpf_test
             }
 
 
-            var sheduleWindow = new SheduleWindow(this._settingsParametrs);
+            var sheduleWindow = new SheduleWindow(this._settingsParametrs, this._sumWFirst);
             //this.WindowState = WindowState.Maximized;
             sheduleWindow.Show();
+        }
+
+        public void SumWFirst()
+        {
+            for (int i = 0; i < TaskManagerClass.ListTasks.Count; i++)
+                _sumWFirst += TaskManagerClass.ListTasks[i].Importance;
         }
 
         /// <summary>

@@ -23,12 +23,13 @@ namespace Wpf_test
         private TaskClass _min = new TaskClass(); //в min хранится первая задача с которой пересекается очередная "пришедшая" задача
         //private ParametersWindow _parametersWindow;
   
-        public SheduleWindow(SettingsParametrs settingsParametrs)
+        public SheduleWindow(SettingsParametrs settingsParametrs, int sumWFirst)
         {
             InitializeComponent();
             FillSettingsValues(settingsParametrs);
             OutputResultListTasks(settingsParametrs);
             ProcResult(settingsParametrs);
+            OutputW(SumWSecod(), sumWFirst);
             Checking(settingsParametrs);
         }
 
@@ -60,7 +61,7 @@ namespace Wpf_test
 
             double count = (Convert.ToDouble(TaskManagerClass.ResultListTasks.Count) / Convert.ToDouble(settingsParametrs.TaskCounts))*100;
             var percent = Math.Round((count),2);
-            ResultTasksListTextBox.AppendText("\nКоличество задач на обработку = " + TaskManagerClass.ResultListTasks.Count + " (" + percent + "%)" + "\n\n");
+            ResultTasksListTextBox.AppendText("\n\nКоличество задач выставленных на обработку = " + TaskManagerClass.ResultListTasks.Count + " (" + percent + "%)" + "\n\n");
 
         }
 
@@ -88,6 +89,31 @@ namespace Wpf_test
                 count2 = settingsParametrs.DirectTime;
             }             
 
+        }
+
+        /// <summary>
+        /// сумма важности задач поступивших на обработку
+        /// </summary>
+        /// <returns></returns>
+        public int SumWSecod()
+        {
+            int sumWSecod = 0;
+            for (int i = 0; i < TaskManagerClass.ResultListTasks.Count; i++)
+                sumWSecod += TaskManagerClass.ResultListTasks[i].Importance;
+            return sumWSecod;
+
+        }
+
+        /// <summary>
+        /// вывод результатов важности задач
+        /// </summary>
+        /// <param name="sumWSecond"> сумма важности задач поступивших на обработку </param>
+        /// <param name="sumWFirsrt"> сумма важности всех задач </param>
+        public void OutputW(int sumWSecond, int sumWFirsrt)
+        {
+            double percent = (Convert.ToDouble(sumWSecond) / Convert.ToDouble(sumWFirsrt)) * 100;
+            ResultTasksListTextBox.AppendText("\nсуммарная важность всех задач - " + sumWFirsrt);
+            ResultTasksListTextBox.AppendText("\nсуммарная важность задач выставленных на обработку - " + sumWSecond + "(" + Math.Round(percent,2) + "%)\n\n");
         }
 
         /// <summary>

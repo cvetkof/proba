@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shedule", "Wpf-test\Shedule.csproj", "{C65AD4A7-B898-4586-AF24-162E44E5DDF5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpf-test", "Wpf-test.csproj", "{C65AD4A7-B898-4586-AF24-162E44E5DDF5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +20,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {89F16F60-E34D-41F9-9034-191E84EC207F}
+		SolutionGuid = {2F704FB5-491D-46DD-8A29-661432C747C4}
 	EndGlobalSection
 EndGlobal
