@@ -135,6 +135,9 @@ namespace Wpf_test
             sheduleWindow.Show();
         }
 
+        /// <summary>
+        /// сумма важностей всех задач
+        /// </summary>
         public void SumWFirst()
         {
             for (int i = 0; i < TaskManagerClass.ListTasks.Count; i++)
@@ -147,15 +150,6 @@ namespace Wpf_test
         public void SortRelativityImportance()
         {
             TaskManagerClass.ListTasks = TaskManagerClass.ListTasks.OrderByDescending(l => l.RelativityImportance).ToList();
-        }
-
-        /// <summary>
-        /// вставка первой задачи в список-результат
-        /// </summary>
-        public void InsertFirstTask(int proc)
-        {
-            TaskManagerClass.ListTasks[0].NumberProc = proc + 1;
-            TaskManagerClass.MiddleResultListTasks.Add(TaskManagerClass.ListTasks[0]);
         }
 
         private void SetPBar()
@@ -216,7 +210,7 @@ namespace Wpf_test
                 if (intersectionLeft || intersectionRight || intersectionRightLeft)
                 {
                     numbers.Add(TaskManagerClass.MiddleResultListTasks[i]); // в списке number храняться номера задач с которыми
-                                                                      // пересекается очередная "пришедшая" 
+                                                                            // пересекается очередная "пришедшая" 
                 }
             }
 
@@ -389,15 +383,10 @@ namespace Wpf_test
         /// </summary>
         public void DeleteTasks()
         {
-            for(int i = 0; i < TaskManagerClass.ResultListTasks.Count; i++)
+            foreach (var task in TaskManagerClass.ResultListTasks)
             {
-                TaskManagerClass.ListTasks.RemoveAll(p => p.Guid == TaskManagerClass.ResultListTasks[i].Guid);
+                TaskManagerClass.ListTasks.RemoveAll(t => t.Guid == task.Guid);
             }
-        }
-
-        public void Packaging()
-        {
-            
         }
     }
 }

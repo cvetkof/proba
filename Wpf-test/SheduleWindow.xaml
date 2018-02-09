@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_test"
         mc:Ignorable="d"
-        Title="SheduleWindow" Height="410" Width="470"
-        MinHeight="410" MinWidth="470"
+        Title="SheduleWindow" Height="430" Width="500"
+        MinHeight="430" MinWidth="500"
         >
     <Grid>
         <Grid.ColumnDefinitions>
