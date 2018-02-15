@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Wpf_test"
         mc:Ignorable="d"
         Title="ManuallyInputWindow" Height="200" Width="300"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
     <Grid>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="95,79,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="53" BorderBrush="Black" Name="TimeToStartTextBox"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="153,79,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="53" BorderBrush="Black" Name="TimeToWorkTextBox"/>

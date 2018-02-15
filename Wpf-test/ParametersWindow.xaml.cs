@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -21,7 +22,8 @@ namespace Wpf_test
     {
         private SettingsParametrs _settingsParametrs;
         private TaskClass _min = new TaskClass(); //в min хранится первая задача с которой пересекается очередная "пришедшая" задача
-        int _sumWFirst = 0;
+        private int _sumWFirst = 0;
+                
 
         public ParametersWindow(SettingsParametrs settingsParametrs)
         {
@@ -86,19 +88,26 @@ namespace Wpf_test
 
         private void MakeShedule(object sender, RoutedEventArgs e)
         {
-            SetPBar();
+            double maxCount = this._settingsParametrs.ProcCount * this._settingsParametrs.TaskCounts;
+
+            FirstSetPBar(maxCount);
             SortRelativityImportance();
             TaskManagerClass.InitializeMiddleResultListTasks();
             TaskManagerClass.InitializeResultListTasks();
 
+            //Thread pBarThread = new Thread(PBarValue);
+            //pBarThread.Start();
+
             SumWFirst();
 
+
             for (int procCount = 0; procCount < _settingsParametrs.ProcCount; procCount++) // цикл количества процессоров
-            {                
+            {
+                SetPBar(maxCount);
+
                 for (int i = 0; i < TaskManagerClass.ListTasks.Count; i++)
                 {
-                    pBar.Value++;
-                 
+
                     FindLeft(OverlappingTasks(i));
 
                     if (_min.TimeToStart >= 0)
@@ -123,6 +132,8 @@ namespace Wpf_test
                     }
                 }
 
+                maxCount = maxCount - this._settingsParametrs.TaskCounts + TaskManagerClass.MiddleResultListTasks.Count;
+
                 TaskManagerClass.ResultListTasks.AddRange(TaskManagerClass.MiddleResultListTasks); // перенос из промежуточного в результирующий список элементов
                 TaskManagerClass.MiddleResultListTasks.Clear(); // удаление всех элементов промежуточного списка
                 DeleteTasks(); // удаление элементов выставленных в результирующий список из начального списка
@@ -133,6 +144,13 @@ namespace Wpf_test
             var sheduleWindow = new SheduleWindow(this._settingsParametrs, this._sumWFirst);
             //this.WindowState = WindowState.Maximized;
             sheduleWindow.Show();
+            this.Close();
+        }
+
+        public void PBarValue()
+        {
+            pBar.Value++;
+            //Thread.Sleep(0);
         }
 
         /// <summary>
@@ -152,13 +170,25 @@ namespace Wpf_test
             TaskManagerClass.ListTasks = TaskManagerClass.ListTasks.OrderByDescending(l => l.RelativityImportance).ToList();
         }
 
-        private void SetPBar()
+        /// <summary>
+        /// начальная настройка прогрессбара
+        /// </summary>
+        /// <param name="maxCount"></param>
+        public void FirstSetPBar(double maxCount)
         {
-            this.pBar.Maximum = this._settingsParametrs.TaskCounts;
-            this.pBar.Minimum = 0;
-            this.pBar.Value = 0;     
+            this.pBar.Maximum = maxCount;
+            this.pBar.Value = 0;
         }
 
+        /// <summary>
+        /// изменение макс. значения прогрессбара
+        /// </summary>
+        /// <param name="maxCount"> новое значение прогрессбара </param>
+        public void SetPBar(double maxCount)
+        {
+            this.pBar.Maximum = maxCount;
+        }
+        
         /// <summary>
         /// поиск крайней левой задачи
         /// </summary>

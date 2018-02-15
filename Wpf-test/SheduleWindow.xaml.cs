@@ -50,7 +50,7 @@ namespace Wpf_test
         /// вывод результирующего списка
         /// </summary>
         public void OutputResultListTasks(SettingsParametrs settingsParametrs)
-        {
+        {            
             for (int task = 0; task < TaskManagerClass.ResultListTasks.Count; task++)
             {
                 ResultTasksListTextBox.AppendText((task + 1) + "\t" + Convert.ToString(TaskManagerClass.ResultListTasks[task].TimeToStart) + "\t" +
