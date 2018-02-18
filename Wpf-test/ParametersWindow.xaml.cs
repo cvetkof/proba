@@ -95,62 +95,68 @@ namespace Wpf_test
             TaskManagerClass.InitializeMiddleResultListTasks();
             TaskManagerClass.InitializeResultListTasks();
 
-            //Thread pBarThread = new Thread(PBarValue);
-            //pBarThread.Start();
-
             SumWFirst();
 
-
-            for (int procCount = 0; procCount < _settingsParametrs.ProcCount; procCount++) // цикл количества процессоров
+            Task.Run(() =>
             {
-                SetPBar(maxCount);
-
-                for (int i = 0; i < TaskManagerClass.ListTasks.Count; i++)
+                for (int procCount = 0; procCount < _settingsParametrs.ProcCount; procCount++) // цикл количества процессоров
                 {
+                    SetPBar(maxCount);
 
-                    FindLeft(OverlappingTasks(i));
+                    for (int i = 0; i < TaskManagerClass.ListTasks.Count; i++)
+                    {
 
-                    if (_min.TimeToStart >= 0)
-                    // если есть пересечение (есть "крайняя левая" задача с которой пересекается очередная), то:
-                    {
-                        if (InsertionCapability(i, OverlappingTasks(i)))
-                        // проверяется возможность вставки, и если вставка возможна, то:
+                        FindLeft(OverlappingTasks(i));
+
+                        if (_min.TimeToStart >= 0)
+                        // если есть пересечение (есть "крайняя левая" задача с которой пересекается очередная), то:
                         {
-                            ShiftTasks(i); // сдвиг задач
-                            InsertionTask(i, procCount); // вставка задачи
-                            SortTimeToStart();
+                            if (InsertionCapability(i, OverlappingTasks(i)))
+                            // проверяется возможность вставки, и если вставка возможна, то:
+                            {
+                                ShiftTasks(i); // сдвиг задач
+                                InsertionTask(i, procCount); // вставка задачи
+                                SortTimeToStart();
+                            }
                         }
-                    }
-                    else // если нет пересечения
-                    {
-                        if (InsertionCapability(i, OverlappingTasks(i)))
-                        // проверяется возможность вставки, и если вставка возможна, то:
+                        else // если нет пересечения
                         {
-                            InsertionTask(i, procCount); // вставка задачи
-                            SortTimeToStart();
+                            if (InsertionCapability(i, OverlappingTasks(i)))
+                            // проверяется возможность вставки, и если вставка возможна, то:
+                            {
+                                InsertionTask(i, procCount); // вставка задачи
+                                SortTimeToStart();
+                            }
                         }
+                        Dispatcher.Invoke(() =>
+                        {
+                            this.PBarValue();
+                        });
                     }
+
+                    maxCount = maxCount - this._settingsParametrs.TaskCounts + TaskManagerClass.MiddleResultListTasks.Count;
+
+                    TaskManagerClass.ResultListTasks.AddRange(TaskManagerClass.MiddleResultListTasks); // перенос из промежуточного в результирующий список элементов
+                    TaskManagerClass.MiddleResultListTasks.Clear(); // удаление всех элементов промежуточного списка
+                    DeleteTasks(); // удаление элементов выставленных в результирующий список из начального списка
+                    _min = null;
+
                 }
+            }).ContinueWith(task => {
 
-                maxCount = maxCount - this._settingsParametrs.TaskCounts + TaskManagerClass.MiddleResultListTasks.Count;
-
-                TaskManagerClass.ResultListTasks.AddRange(TaskManagerClass.MiddleResultListTasks); // перенос из промежуточного в результирующий список элементов
-                TaskManagerClass.MiddleResultListTasks.Clear(); // удаление всех элементов промежуточного списка
-                DeleteTasks(); // удаление элементов выставленных в результирующий список из начального списка
-                _min = null;
-            }
-
-
-            var sheduleWindow = new SheduleWindow(this._settingsParametrs, this._sumWFirst);
-            //this.WindowState = WindowState.Maximized;
-            sheduleWindow.Show();
-            this.Close();
+                Dispatcher.Invoke(() =>
+                {
+                    var sheduleWindow = new SheduleWindow(this._settingsParametrs, this._sumWFirst);
+                    //this.WindowState = WindowState.Maximized;
+                    sheduleWindow.Show();
+                    this.Close();
+                });
+            });            
         }
 
         public void PBarValue()
         {
-            pBar.Value++;
-            //Thread.Sleep(0);
+            pBar.Value++;            
         }
 
         /// <summary>
@@ -186,7 +192,10 @@ namespace Wpf_test
         /// <param name="maxCount"> новое значение прогрессбара </param>
         public void SetPBar(double maxCount)
         {
-            this.pBar.Maximum = maxCount;
+            Dispatcher.Invoke(() =>
+            {
+                this.pBar.Maximum = maxCount;
+            });
         }
         
         /// <summary>

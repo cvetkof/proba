@@ -89,5 +89,10 @@ namespace Wpf_test
 
             return settingParametrs;
         }
+
+        private void TaskCountTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            
+        }
     }
 }
