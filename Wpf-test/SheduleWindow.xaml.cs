@@ -26,10 +26,18 @@ namespace Wpf_test
         public SheduleWindow(SettingsParametrs settingsParametrs, int sumWFirst)
         {
             InitializeComponent();
+
             FillSettingsValues(settingsParametrs);
-            OutputResultListTasks(settingsParametrs);
+
+            ResultGrid.ItemsSource = TaskManagerClass.ResultListTasks;
+            ResultGrid.ColumnWidth = DataGridLength.Auto;
+            
+            //OutputResultListTasks(settingsParametrs);
+
             ProcResult(settingsParametrs);
+
             OutputW(SumWSecod(), sumWFirst);
+
             Checking(settingsParametrs);
         }
 
@@ -44,25 +52,7 @@ namespace Wpf_test
         {
             ProcCountTextBox.Text = settingsParametrs.ProcCount.ToString();
             DirectTimeTextBox.Text = settingsParametrs.DirectTime.ToString();
-        }
-
-        /// <summary>
-        /// вывод результирующего списка
-        /// </summary>
-        public void OutputResultListTasks(SettingsParametrs settingsParametrs)
-        {            
-            for (int task = 0; task < TaskManagerClass.ResultListTasks.Count; task++)
-            {
-                ResultTasksListTextBox.AppendText((task + 1) + "\t" + Convert.ToString(TaskManagerClass.ResultListTasks[task].TimeToStart) + "\t" +
-                    Convert.ToString(TaskManagerClass.ResultListTasks[task].TimeToWork) + "\t" + Convert.ToString(TaskManagerClass.ResultListTasks[task].Importance) + "\t" +
-                    Convert.ToString(TaskManagerClass.ResultListTasks[task].NumberProc) + "\t" + Convert.ToString(TaskManagerClass.ResultListTasks[task].IndexNumber));
-                ResultTasksListTextBox.AppendText("\n");
-            }
-
-            double count = (Convert.ToDouble(TaskManagerClass.ResultListTasks.Count) / Convert.ToDouble(settingsParametrs.TaskCounts))*100;
-            var percent = Math.Round((count),2);
-            ResultTasksListTextBox.AppendText("\n\nКоличество задач выставленных на обработку = " + TaskManagerClass.ResultListTasks.Count + " (" + percent + "%)" + "\n\n");
-
+            TasksCountTextBox.Text = settingsParametrs.TaskCounts.ToString();
         }
 
         /// <summary>
@@ -71,23 +61,28 @@ namespace Wpf_test
         /// <param name="settingsParametrs"></param>
         public void ProcResult(SettingsParametrs settingsParametrs)
         {
+
             int count1 = 0;
             var count2 = settingsParametrs.DirectTime;
             for (int count = 0; count < settingsParametrs.ProcCount; count++)
             {
                 for (int i = 0; i < TaskManagerClass.ResultListTasks.Count; i++)
                 {
-                    if ((count+1) == TaskManagerClass.ResultListTasks[i].NumberProc)
+                    if ((count + 1) == TaskManagerClass.ResultListTasks[i].NumberProc)
                         count1++;
-                    if((count+1) == TaskManagerClass.ResultListTasks[i].NumberProc)
+                    if ((count + 1) == TaskManagerClass.ResultListTasks[i].NumberProc)
                         count2 -= TaskManagerClass.ResultListTasks[i].TimeToWork;
                 }
 
-                var percent = Math.Round(((count2 / settingsParametrs.DirectTime) * 100),1); 
-                ResultTasksListTextBox.AppendText((count+1) + "-ый процессор - " + (count1) + " задач; время простоя - " + count2 + " (" + percent + "%)\n");
+                var percent_proc = Math.Round(((count2 / settingsParametrs.DirectTime) * 100), 1);
+                ResultTasksListTextBox.AppendText("  " + (count + 1) + "-ый процессор - " + (count1) + " задач; время простоя - " + count2 + " (" + percent_proc + "%)\n");
                 count1 = 0;
                 count2 = settingsParametrs.DirectTime;
-            }             
+            }
+
+            double value = (Convert.ToDouble(TaskManagerClass.ResultListTasks.Count) / Convert.ToDouble(settingsParametrs.TaskCounts)) * 100;
+            var percent_tasks = Math.Round((value), 2);
+            ResultTasksListTextBox.AppendText("\n  Количество задач выставленных на обработку = " + TaskManagerClass.ResultListTasks.Count + " (" + percent_tasks + "%)");
 
         }
 
@@ -112,8 +107,8 @@ namespace Wpf_test
         public void OutputW(int sumWSecond, int sumWFirsrt)
         {
             double percent = (Convert.ToDouble(sumWSecond) / Convert.ToDouble(sumWFirsrt)) * 100;
-            ResultTasksListTextBox.AppendText("\nсуммарная важность всех задач - " + sumWFirsrt);
-            ResultTasksListTextBox.AppendText("\nсуммарная важность задач выставленных на обработку - " + sumWSecond + "(" + Math.Round(percent,2) + "%)\n\n");
+            ResultTasksListTextBox.AppendText("\n  суммарная важность всех задач - " + sumWFirsrt);
+            ResultTasksListTextBox.AppendText("\n  суммарная важность задач выставленных на обработку - " + sumWSecond + "(" + Math.Round(percent, 2) + "%)\n\n");
         }
 
         /// <summary>
@@ -129,9 +124,9 @@ namespace Wpf_test
             {
                 for (int j = 0; j < TaskManagerClass.ResultListTasks.Count; j++)
                 {
-                    for (int i = j+1; i < TaskManagerClass.ResultListTasks.Count; i++)
+                    for (int i = j + 1; i < TaskManagerClass.ResultListTasks.Count; i++)
                     {
-                        if ((TaskManagerClass.ResultListTasks[i].NumberProc == k+1) && (TaskManagerClass.ResultListTasks[j].NumberProc == k+1))
+                        if ((TaskManagerClass.ResultListTasks[i].NumberProc == k + 1) && (TaskManagerClass.ResultListTasks[j].NumberProc == k + 1))
                         {
                             bool intersectionRight = ((TaskManagerClass.ResultListTasks[j].TimeToStart < TaskManagerClass.ResultListTasks[i].TimeToEnd) &&
                                                      (TaskManagerClass.ResultListTasks[j].TimeToStart >= TaskManagerClass.ResultListTasks[i].TimeToStart));
@@ -151,7 +146,7 @@ namespace Wpf_test
                 }
             }
 
-            for(int i = 0; i < TaskManagerClass.ResultListTasks.Count; i++)
+            for (int i = 0; i < TaskManagerClass.ResultListTasks.Count; i++)
             {
                 if (TaskManagerClass.ResultListTasks[i].TimeToEnd > directTime)
                     directTime = -1;
@@ -160,15 +155,15 @@ namespace Wpf_test
 
             if ((numbers.Count > 0) && (directTime == -1))
             {
-                ResultTasksListTextBox.AppendText("\n\n\nРабота алгоритма НЕВЕРНА, имеются пересечения!");
+                ResultTasksListTextBox.AppendText("\n  Работа алгоритма НЕВЕРНА, имеются пересечения!");
                 for (int i = 0; i < numbers.Count; i++)
                 {
-                    ResultTasksListTextBox.AppendText("\n\nПересекающиеся задачи:\n" + numbers[i].IndexNumber + "\n");
+                    ResultTasksListTextBox.AppendText("\n\n  Пересекающиеся задачи:\n" + numbers[i].IndexNumber + "\n");
                 }
             }
             else
             {
-                ResultTasksListTextBox.AppendText("\n\nРабота алгоритма ВЕРНА, персечений нет");
+                ResultTasksListTextBox.AppendText("\n  Работа алгоритма ВЕРНА, персечений нет");
             }
         }
     }

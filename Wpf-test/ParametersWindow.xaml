@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_test"
         mc:Ignorable="d"
-        Title="Parameters Window" Height="420" Width="410"
-        MinHeight="420" MinWidth="410"
+        Title="Parameters Window" Height="460" Width="490"
+        MinHeight="460" MinWidth="490"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanResizeWithGrip">
+        ResizeMode="CanResizeWithGrip"
+        Background="Azure">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -20,20 +21,49 @@
             <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Label Grid.Column="1" Content="Proc" Margin="20,104,30,222" Height="23" VerticalAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top">
+            <Run FontSize="14" FontWeight="Bold">№</Run>
+        </TextBlock>
 
-        <TextBox Grid.Column="1" Margin="20,130,30,194" TextWrapping="Wrap" Name="ProcCountTextBox" Height="25" VerticalAlignment="Center" IsReadOnly="True" BorderBrush="Black" TextAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="300,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top">
+            <Run FontSize="14" FontWeight="Bold">Dispr</Run>
+        </TextBlock>
 
-        <Label Grid.Column="1" Content="TimeD" Margin="20,179,30,147" Height="23" VerticalAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="106,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top">
+            <Run FontSize="14" FontWeight="Bold">T</Run>
+            <Run FontSize="10" FontWeight="Bold">обр</Run>
+        </TextBlock>
 
-        <TextBox Grid.Column="1" Margin="20,206,30,118" TextWrapping="Wrap" Name="DirectTimeTextBox" Height="25" VerticalAlignment="Center" IsReadOnly="True" BorderBrush="Black" TextAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="158,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top">
+            <Run FontSize="14" FontWeight="Bold">W</Run>
+        </TextBlock>
 
-        <TextBox Margin="10" TextWrapping="NoWrap" Name="ParametrsFirstResults" BorderBrush="Black" VerticalScrollBarVisibility="Auto" IsReadOnly="True"/>
+        <TextBlock HorizontalAlignment="Left" Margin="201,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top">
+            <Run FontSize="14" FontWeight="Bold">Proc</Run>
+        </TextBlock>
+
+        <TextBox Margin="10,35,10,10" TextWrapping="NoWrap" Name="ParametrsFirstResults" BorderBrush="Black" VerticalScrollBarVisibility="Auto" IsReadOnly="True"/>
 
         <Button Content="Schedule" Grid.Column="1" Margin="0,0,15,10" Width="80" Click="MakeShedule" Height="23" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
-        <Button Content="Back" Grid.Column="1" HorizontalAlignment="Left" Margin="5,10,0,0" VerticalAlignment="Top" Width="80" Height="23" Click="GoBack"/>
+        <Button Content="Back" Grid.Column="1" Margin="0,35,15,0" VerticalAlignment="Top" Height="23" Click="GoBack" HorizontalAlignment="Right" Width="80"/>
 
         <ProgressBar Margin="10,0,10,10" Name="pBar" Grid.Row="1"/>
+
+        <Label Grid.Column="1" Content="  Proc" Margin="20,178,30,188" Height="23" Width="50" VerticalAlignment="Center" />
+        <TextBox Grid.Column="1" Margin="20,208,30,156" TextWrapping="Wrap" x:Name="ProcCountTextBox" Height="25" Width="50" VerticalAlignment="Center" IsReadOnly="True" BorderBrush="Black" TextAlignment="Center"/>
+        <Label Grid.Column="1" Content="TimeD" Margin="22,254,28,112" Height="23" Width="50" VerticalAlignment="Center"/>
+        <TextBox Grid.Column="1" Margin="20,283,30,81" TextWrapping="Wrap" x:Name="DirectTimeTextBox" Height="25" Width="50" VerticalAlignment="Center" IsReadOnly="True" BorderBrush="Black" TextAlignment="Center"/>
+        <Label Grid.Column="1" Content=" Tasks" Margin="20,106,30,259" Height="24" Width="50" VerticalAlignment="Center"/>
+        <TextBox Grid.Column="1" Margin="20,136,30,229" TextWrapping="Wrap" Name="TasksCountTextBox" Height="24" Width="50" VerticalAlignment="Center" IsReadOnly="True" BorderBrush="Black" TextAlignment="Center"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="246,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top">
+            <Run FontSize="14" FontWeight="Bold">Math</Run>
+        </TextBlock>
+
+        <TextBlock HorizontalAlignment="Left" Margin="62,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top">
+            <Run FontSize="14" FontWeight="Bold">T</Run>
+            <Run FontSize="10" FontWeight="Bold">н</Run>
+        </TextBlock>
 
     </Grid>
 </Window>

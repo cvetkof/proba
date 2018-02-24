@@ -72,9 +72,9 @@ namespace Wpf_test
         private SettingsParametrs GetSettingsParametrs(Enums.InputType inputType) // метод, присваивающий полям объкта значения,
                                                                                   // введеные в начальном окне  
         {
-            int taskCountTextBoxValue = Convert.ToInt16(TaskCountTextBox.Text);
+            int taskCountTextBoxValue = Convert.ToInt32(TaskCountTextBox.Text);
 
-            int procCountTextBoxValue = Convert.ToInt16(ProcCountTextBox.Text);
+            int procCountTextBoxValue = Convert.ToInt32(ProcCountTextBox.Text);
 
             double directTimeTextBoxValue = Convert.ToDouble(DirectTimeTextBox.Text);
 
@@ -88,11 +88,6 @@ namespace Wpf_test
             
 
             return settingParametrs;
-        }
-
-        private void TaskCountTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            
         }
     }
 }

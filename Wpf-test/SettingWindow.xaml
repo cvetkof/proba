@@ -7,13 +7,16 @@
         mc:Ignorable="d"
         Title="SettingsWindow" Height="350" Width="525"
         ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Background="Azure">
     <Grid>
-        <Label Content="Введите количество задач" HorizontalAlignment="Left" Margin="47,54,0,0" VerticalAlignment="Top" Height="26" Width="207"/>
-        <Label Content="Введите количество процессоров" HorizontalAlignment="Left" Margin="47,117,0,0" VerticalAlignment="Top" Height="30" Width="207"/>
-        <Label Content="Введите директивное время (сек)" HorizontalAlignment="Left" Margin="47,179,0,0" VerticalAlignment="Top" Width="207"/>
+        <Label Content="Введите количество задач" Margin="47,54,264,0" VerticalAlignment="Top" Height="26" Width="207"/>
 
-        <TextBox TextChanged="TaskCountTextBox_TextChanged" HorizontalAlignment="Left" Height="23" Margin="259,54,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="217" Text="1" Name="TaskCountTextBox" BorderBrush="Black"/>
+        <Label Content="Введите количество процессоров" Margin="47,117,265,0" VerticalAlignment="Top" Height="26" Width="207"/>
+
+        <Label Content="Введите директивное время (сек)" Margin="47,179,265,0" VerticalAlignment="Top" Height="26" Width="207"/>
+
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="259,54,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="217" Name="TaskCountTextBox" BorderBrush="Black"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="259,117,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="217" Name="ProcCountTextBox" BorderBrush="Black"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="259,179,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="217" Name="DirectTimeTextBox" BorderBrush="Black"/>
         

@@ -36,6 +36,7 @@ namespace Wpf_test
         {
             ProcCountTextBox.Text = settingsParametrs.ProcCount.ToString();
             DirectTimeTextBox.Text = settingsParametrs.DirectTime.ToString();
+            TasksCountTextBox.Text = settingsParametrs.TaskCounts.ToString();
 
             GenerateTable(settingsParametrs);
         }
@@ -52,6 +53,8 @@ namespace Wpf_test
                     {
                         var task = new TaskClass
                         {
+                            Mathematic = rand.Next(1,73),
+                            Dispr = rand.Next(1,73),
                             TimeToStart = rand.Next(1, 5400), // значение от 1с до  1ч 30мин
                             TimeToWork = rand.Next(1, 420), // значение от 1c до 7мин
                             Importance = rand.Next(1, 100), // значение от 1 до 100
@@ -61,20 +64,33 @@ namespace Wpf_test
 
                         TaskManagerClass.ListTasks.Add(task);
 
-                        ParametrsFirstResults.AppendText("время поступления " + (count + 1) + "-ой задачи - " + TaskManagerClass.ListTasks[count].TimeToStart + "\n");
-                        ParametrsFirstResults.AppendText("время обработки " + (count + 1) + "-ой задачи    - " + TaskManagerClass.ListTasks[count].TimeToWork + "\n");
-                        ParametrsFirstResults.AppendText("важность " + (count + 1) + "-ой задачи                  - " + TaskManagerClass.ListTasks[count].Importance + "\n\n");
+                        //ParametrsFirstResults.AppendText("время поступления " + (count + 1) + "-ой задачи - " + TaskManagerClass.ListTasks[count].TimeToStart + "\n");
+                        //ParametrsFirstResults.AppendText("время обработки " + (count + 1) + "-ой задачи    - " + TaskManagerClass.ListTasks[count].TimeToWork + "\n");
+                        //ParametrsFirstResults.AppendText("важность " + (count + 1) + "-ой задачи                  - " + TaskManagerClass.ListTasks[count].Importance + "\n\n");
                         //ParametrsFirstResults.AppendText("порядковый номер - " + TaskManagerClass.ListTasks[count].IndexNumber + "\n\n");
+
+                        ParametrsFirstResults.AppendText((count + 1) + "\t" + Convert.ToString(TaskManagerClass.ListTasks[count].TimeToStart) + "\t" +
+                            Convert.ToString(TaskManagerClass.ListTasks[count].TimeToWork) + "\t" + Convert.ToString(TaskManagerClass.ListTasks[count].Importance) + "\t" +
+                            Convert.ToString(TaskManagerClass.ListTasks[count].NumberProc) + "\t" + Convert.ToString(TaskManagerClass.ListTasks[count].Mathematic) + "\t" +
+                            Convert.ToString(TaskManagerClass.ListTasks[count].Dispr));
+                        ParametrsFirstResults.AppendText("\n");
+
                     }
                 }
                 else
                 {
                     for (int count = 0; count < settingsParametrs.TaskCounts; count++)
                     {
-                        ParametrsFirstResults.AppendText("время поступления " + (count + 1) + "-ой задачи - " + TaskManagerClass.ListTasks[count].TimeToStart + "\n");
-                        ParametrsFirstResults.AppendText("время обработки " + (count + 1) + "-ой задачи    - " + TaskManagerClass.ListTasks[count].TimeToWork + "\n");
-                        ParametrsFirstResults.AppendText("важность " + (count + 1) + "-ой задачи                  - " + TaskManagerClass.ListTasks[count].Importance + "\n\n");
-                        //ParametrsFirstResults.AppendText("порядковый номер - " + TaskManagerClass.ListTasks[count].IndexNumber + "\n\n");
+                    //ParametrsFirstResults.AppendText("время поступления " + (count + 1) + "-ой задачи - " + TaskManagerClass.ListTasks[count].TimeToStart + "\n");
+                    //ParametrsFirstResults.AppendText("время обработки " + (count + 1) + "-ой задачи    - " + TaskManagerClass.ListTasks[count].TimeToWork + "\n");
+                    //ParametrsFirstResults.AppendText("важность " + (count + 1) + "-ой задачи                  - " + TaskManagerClass.ListTasks[count].Importance + "\n\n");
+                    //ParametrsFirstResults.AppendText("порядковый номер - " + TaskManagerClass.ListTasks[count].IndexNumber + "\n\n");
+
+                    ParametrsFirstResults.AppendText((count + 1) + "\t" + Convert.ToString(TaskManagerClass.ListTasks[count].TimeToStart) + "\t" +
+                        Convert.ToString(TaskManagerClass.ListTasks[count].TimeToWork) + "\t" + Convert.ToString(TaskManagerClass.ListTasks[count].Importance) + "\t" +
+                        Convert.ToString(TaskManagerClass.ListTasks[count].NumberProc) + "\t" + Convert.ToString(TaskManagerClass.ListTasks[count].Mathematic) + "\t" +
+                        Convert.ToString(TaskManagerClass.ListTasks[count].Dispr));
+                    ParametrsFirstResults.AppendText("\n");
                     }
                 }
         }
@@ -88,9 +104,6 @@ namespace Wpf_test
 
         private void MakeShedule(object sender, RoutedEventArgs e)
         {
-            double maxCount = this._settingsParametrs.ProcCount * this._settingsParametrs.TaskCounts;
-
-            FirstSetPBar(maxCount);
             SortRelativityImportance();
             TaskManagerClass.InitializeMiddleResultListTasks();
             TaskManagerClass.InitializeResultListTasks();
@@ -99,64 +112,84 @@ namespace Wpf_test
 
             Task.Run(() =>
             {
+                Dispatcher.Invoke(() =>
+                {
+                    this.pBar.Maximum = this._settingsParametrs.TaskCounts * this._settingsParametrs.ProcCount;
+                    this.pBar.Value = 0;
+                });
+
                 for (int procCount = 0; procCount < _settingsParametrs.ProcCount; procCount++) // цикл количества процессоров
                 {
-                    SetPBar(maxCount);
-
-                    for (int i = 0; i < TaskManagerClass.ListTasks.Count; i++)
+                    if (TaskManagerClass.ListTasks.Count > 0)
                     {
-
-                        FindLeft(OverlappingTasks(i));
-
-                        if (_min.TimeToStart >= 0)
-                        // если есть пересечение (есть "крайняя левая" задача с которой пересекается очередная), то:
+                        for (int i = 0; i < TaskManagerClass.ListTasks.Count; i++)
                         {
-                            if (InsertionCapability(i, OverlappingTasks(i)))
-                            // проверяется возможность вставки, и если вставка возможна, то:
+                            FindLeft(OverlappingTasks(i));
+
+                            if (_min.TimeToStart >= 0)
+                            // если есть пересечение (есть "крайняя левая" задача с которой пересекается очередная), то:
                             {
-                                ShiftTasks(i); // сдвиг задач
-                                InsertionTask(i, procCount); // вставка задачи
-                                SortTimeToStart();
+                                if (InsertionCapability(i, OverlappingTasks(i)))
+                                // проверяется возможность вставки, и если вставка возможна, то:
+                                {
+                                    ShiftTasks(i); // сдвиг задач
+                                    InsertionTask(i, procCount); // вставка задачи
+                                    SortTimeToStart();
+                                }
                             }
-                        }
-                        else // если нет пересечения
-                        {
-                            if (InsertionCapability(i, OverlappingTasks(i)))
-                            // проверяется возможность вставки, и если вставка возможна, то:
+                            else // если нет пересечения
                             {
-                                InsertionTask(i, procCount); // вставка задачи
-                                SortTimeToStart();
+                                if (InsertionCapability(i, OverlappingTasks(i)))
+                                // проверяется возможность вставки, и если вставка возможна, то:
+                                {
+                                    InsertionTask(i, procCount); // вставка задачи
+                                    SortTimeToStart();
+                                }
                             }
+
+                            Dispatcher.Invoke(() =>
+                            {
+                                this.pBar.Value++;
+                            });
                         }
+
                         Dispatcher.Invoke(() =>
                         {
-                            this.PBarValue();
+                            //this.pBar.Maximum = this.pBar.Maximum - (TaskManagerClass.MiddleResultListTasks.Count * this._settingsParametrs.ProcCount);
+                            for (int k = 0; k < TaskManagerClass.ResultListTasks.Count; k++)
+                            {
+                                this.pBar.Value++;
+                            }
                         });
                     }
-
-                    maxCount = maxCount - this._settingsParametrs.TaskCounts + TaskManagerClass.MiddleResultListTasks.Count;
+                    else
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            for (int k = 0; k < this._settingsParametrs.TaskCounts; k++)
+                            {
+                                this.pBar.Value++;
+                            }
+                        });
+                    }
 
                     TaskManagerClass.ResultListTasks.AddRange(TaskManagerClass.MiddleResultListTasks); // перенос из промежуточного в результирующий список элементов
                     TaskManagerClass.MiddleResultListTasks.Clear(); // удаление всех элементов промежуточного списка
                     DeleteTasks(); // удаление элементов выставленных в результирующий список из начального списка
                     _min = null;
-
                 }
+
+            SetResultIndexNumber();
+
             }).ContinueWith(task => {
 
                 Dispatcher.Invoke(() =>
                 {
                     var sheduleWindow = new SheduleWindow(this._settingsParametrs, this._sumWFirst);
-                    //this.WindowState = WindowState.Maximized;
                     sheduleWindow.Show();
                     this.Close();
                 });
-            });            
-        }
-
-        public void PBarValue()
-        {
-            pBar.Value++;            
+            });
         }
 
         /// <summary>
@@ -174,28 +207,6 @@ namespace Wpf_test
         public void SortRelativityImportance()
         {
             TaskManagerClass.ListTasks = TaskManagerClass.ListTasks.OrderByDescending(l => l.RelativityImportance).ToList();
-        }
-
-        /// <summary>
-        /// начальная настройка прогрессбара
-        /// </summary>
-        /// <param name="maxCount"></param>
-        public void FirstSetPBar(double maxCount)
-        {
-            this.pBar.Maximum = maxCount;
-            this.pBar.Value = 0;
-        }
-
-        /// <summary>
-        /// изменение макс. значения прогрессбара
-        /// </summary>
-        /// <param name="maxCount"> новое значение прогрессбара </param>
-        public void SetPBar(double maxCount)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                this.pBar.Maximum = maxCount;
-            });
         }
         
         /// <summary>
@@ -425,6 +436,17 @@ namespace Wpf_test
             foreach (var task in TaskManagerClass.ResultListTasks)
             {
                 TaskManagerClass.ListTasks.RemoveAll(t => t.Guid == task.Guid);
+            }
+        }
+
+        /// <summary>
+        /// присвоение порядкового номера
+        /// </summary>
+        public void SetResultIndexNumber()
+        {
+            for (int i = 0; i < TaskManagerClass.ResultListTasks.Count; i++)
+            {
+                TaskManagerClass.ResultListTasks[i].ResultIndexNumber = i + 1;
             }
         }
     }

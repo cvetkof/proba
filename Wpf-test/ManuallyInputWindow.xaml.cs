@@ -28,7 +28,8 @@ namespace Wpf_test
 
             var task = new TaskClass
             {
-                TimeToStart = Convert.ToInt16(this.TimeToStartTextBox.Text),
+                Mathematic = Convert.ToInt16(this.MathTextBox.Text),
+                Dispr = Convert.ToInt16(this.DisprTextBox.Text),
                 TimeToWork = Convert.ToInt16(this.TimeToWorkTextBox.Text),
                 Importance = Convert.ToInt16(this.ImportanceTextBox.Text),
                 IndexNumber = Convert.ToInt16(NumberTask.Text),

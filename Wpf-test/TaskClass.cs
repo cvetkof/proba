@@ -11,7 +11,18 @@ namespace Wpf_test
     /// </summary>
     public class TaskClass 
     {
-        public int TimeToStart { get; set; }
+        public int TimeToStart
+        {
+            get; set;
+            //get
+            //{
+            //    return this._timeToStart;
+            //}
+            //set
+            //{
+            //    this._timeToStart = value;
+            //}
+        }
 
         public int TimeToWork { get; set; }
 
@@ -26,5 +37,13 @@ namespace Wpf_test
         public double RelativityImportance => Math.Round((Math.Pow(Importance, 2) / TimeToWork), 3);
 
         public int IndexNumber { get; set; }
+
+        public int ResultIndexNumber { get; set; }
+
+        public int Mathematic { get; set; }
+
+        public int Dispr { get; set; }
+
+        private int _timeToStart;
     }
 }
