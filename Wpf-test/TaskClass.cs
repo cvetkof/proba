@@ -11,22 +11,11 @@ namespace Wpf_test
     /// </summary>
     public class TaskClass 
     {
-        public int TimeToStart
-        {
-            get; set;
-            //get
-            //{
-            //    return this._timeToStart;
-            //}
-            //set
-            //{
-            //    this._timeToStart = value;
-            //}
-        }
+        public double TimeToStart { get; set; }
 
         public int TimeToWork { get; set; }
 
-        public int TimeToEnd => TimeToStart + TimeToWork;
+        public double TimeToEnd => TimeToStart + TimeToWork;
 
         public int Importance { get; set; }
 
@@ -40,10 +29,8 @@ namespace Wpf_test
 
         public int ResultIndexNumber { get; set; }
 
-        public int Mathematic { get; set; }
+        public double Mathematic { get; set; }
 
-        public int Dispr { get; set; }
-
-        private int _timeToStart;
+        public double Dispr { get; set; }
     }
 }

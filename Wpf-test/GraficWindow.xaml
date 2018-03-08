@@ -1,0 +1,27 @@
+﻿<Window x:Class="Wpf_test.GraficWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf_test"
+        mc:Ignorable="d"
+        Title="GraficWindow" Height="351.628" Width="669.767">
+    <Grid Name="GraficGrid">
+        <Line X1="20" Y1="150" X2="620" Y2="150" Stroke="Black" StrokeThickness="3"/>
+        <Line X1="20" Y1="40" X2="20" Y2="250" Stroke="Black" StrokeThickness="3"/>
+        <Line X1="600" Y1="40" X2="600" Y2="250" Stroke="Black" StrokeThickness="2" StrokeDashArray="2 2"/>
+        <Line X1="20" Y1="250" X2="620" Y2="250" Stroke="Black" StrokeThickness="3"/>
+
+        <Rectangle Margin="35,114,527,0" Fill="Yellow" Stroke="Green" Height="36" VerticalAlignment="Top"/>
+        <Rectangle Margin="135,114,463,0" Fill="Red" Stroke="Green" Height="36" VerticalAlignment="Top"/>
+        <Rectangle Margin="223,114,293,0" Fill="Green" Stroke="Green" Height="36" VerticalAlignment="Top"/>
+        <Rectangle Margin="369,114,221,0" Fill="Blue" Stroke="Green" Height="36" VerticalAlignment="Top"/>
+        <Rectangle Margin="469,114,76,0" Fill="Brown" Stroke="Green" Height="36" VerticalAlignment="Top"/>
+        <Rectangle Margin="529,212,76,0" Fill="Yellow" Stroke="Green" Height="36" VerticalAlignment="Top"/>
+        <Rectangle Margin="429,212,169,0" Fill="Red" Stroke="Green" Height="36" VerticalAlignment="Top"/>
+        <Rectangle Margin="92,213,353,0" Fill="Green" Stroke="Green" Height="36" VerticalAlignment="Top"/>
+        <Rectangle Margin="498,212,134,0" Fill="Blue" Stroke="Green" Height="37" VerticalAlignment="Top"/>
+        <Rectangle Margin="314,213,269,0" Fill="Brown" Stroke="Green" Height="36" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

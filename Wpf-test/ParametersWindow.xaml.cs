@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Windows;
@@ -21,9 +22,6 @@ namespace Wpf_test
     public partial class ParametersWindow : Window
     {
         private SettingsParametrs _settingsParametrs;
-        private TaskClass _min = new TaskClass(); //в min хранится первая задача с которой пересекается очередная "пришедшая" задача
-        private int _sumWFirst = 0;
-                
 
         public ParametersWindow(SettingsParametrs settingsParametrs)
         {
@@ -43,56 +41,39 @@ namespace Wpf_test
 
         private void GenerateTable(SettingsParametrs settingsParametrs)
         {
-                if(settingsParametrs.InputType == Enums.InputType.Random)
+            if (settingsParametrs.InputType == Enums.InputType.Random)
+            {
+                Random rand = new Random();
+
+                TaskManagerClass.InitializeListTasks();
+
+                for (int count = 0; count < settingsParametrs.TaskCounts; count++)
                 {
-                    Random rand = new Random();
-
-                    TaskManagerClass.InitializeListTasks();
-
-                    for (int count = 0; count < settingsParametrs.TaskCounts; count++)
+                    var task = new TaskClass
                     {
-                        var task = new TaskClass
-                        {
-                            Mathematic = rand.Next(1,73),
-                            Dispr = rand.Next(1,73),
-                            TimeToStart = rand.Next(1, 5400), // значение от 1с до  1ч 30мин
-                            TimeToWork = rand.Next(1, 420), // значение от 1c до 7мин
-                            Importance = rand.Next(1, 100), // значение от 1 до 100
-                            IndexNumber = count + 1,
-                            Guid = Guid.NewGuid()
-                        };
+                        Mathematic = rand.Next(1,100000),
+                        Dispr = rand.Next(1,100000),
+                        TimeToWork = rand.Next(1, 420), // значение от 1c до 7мин
+                        Importance = rand.Next(1, 100), // значение от 1 до 100
+                        IndexNumber = count + 1,
+                        Guid = Guid.NewGuid()
+                    };
 
-                        TaskManagerClass.ListTasks.Add(task);
+                    task.Mathematic = task.Mathematic / 10; // сведение к интервалу (0.01; 100)
+                    task.Dispr = task.Dispr / 10; // сведение к интервалу (0.01; 100)
 
-                        //ParametrsFirstResults.AppendText("время поступления " + (count + 1) + "-ой задачи - " + TaskManagerClass.ListTasks[count].TimeToStart + "\n");
-                        //ParametrsFirstResults.AppendText("время обработки " + (count + 1) + "-ой задачи    - " + TaskManagerClass.ListTasks[count].TimeToWork + "\n");
-                        //ParametrsFirstResults.AppendText("важность " + (count + 1) + "-ой задачи                  - " + TaskManagerClass.ListTasks[count].Importance + "\n\n");
-                        //ParametrsFirstResults.AppendText("порядковый номер - " + TaskManagerClass.ListTasks[count].IndexNumber + "\n\n");
-
-                        ParametrsFirstResults.AppendText((count + 1) + "\t" + Convert.ToString(TaskManagerClass.ListTasks[count].TimeToStart) + "\t" +
-                            Convert.ToString(TaskManagerClass.ListTasks[count].TimeToWork) + "\t" + Convert.ToString(TaskManagerClass.ListTasks[count].Importance) + "\t" +
-                            Convert.ToString(TaskManagerClass.ListTasks[count].NumberProc) + "\t" + Convert.ToString(TaskManagerClass.ListTasks[count].Mathematic) + "\t" +
-                            Convert.ToString(TaskManagerClass.ListTasks[count].Dispr));
-                        ParametrsFirstResults.AppendText("\n");
-
-                    }
+                    TaskManagerClass.ListTasks.Add(task);
                 }
-                else
-                {
-                    for (int count = 0; count < settingsParametrs.TaskCounts; count++)
-                    {
-                    //ParametrsFirstResults.AppendText("время поступления " + (count + 1) + "-ой задачи - " + TaskManagerClass.ListTasks[count].TimeToStart + "\n");
-                    //ParametrsFirstResults.AppendText("время обработки " + (count + 1) + "-ой задачи    - " + TaskManagerClass.ListTasks[count].TimeToWork + "\n");
-                    //ParametrsFirstResults.AppendText("важность " + (count + 1) + "-ой задачи                  - " + TaskManagerClass.ListTasks[count].Importance + "\n\n");
-                    //ParametrsFirstResults.AppendText("порядковый номер - " + TaskManagerClass.ListTasks[count].IndexNumber + "\n\n");
 
-                    ParametrsFirstResults.AppendText((count + 1) + "\t" + Convert.ToString(TaskManagerClass.ListTasks[count].TimeToStart) + "\t" +
-                        Convert.ToString(TaskManagerClass.ListTasks[count].TimeToWork) + "\t" + Convert.ToString(TaskManagerClass.ListTasks[count].Importance) + "\t" +
-                        Convert.ToString(TaskManagerClass.ListTasks[count].NumberProc) + "\t" + Convert.ToString(TaskManagerClass.ListTasks[count].Mathematic) + "\t" +
-                        Convert.ToString(TaskManagerClass.ListTasks[count].Dispr));
-                    ParametrsFirstResults.AppendText("\n");
-                    }
-                }
+            ParametersWindowGrid.ItemsSource = TaskManagerClass.ListTasks;
+            ParametersWindowGrid.ColumnWidth = DataGridLength.Auto;
+
+            }
+            else
+            {
+                ParametersWindowGrid.ItemsSource = TaskManagerClass.ListTasks;
+                ParametersWindowGrid.ColumnWidth = DataGridLength.Auto;
+            }
         }
 
         private void GoBack(object sender, RoutedEventArgs e)
@@ -102,352 +83,97 @@ namespace Wpf_test
             this.Close();            
         }
 
-        private void MakeShedule(object sender, RoutedEventArgs e)
+        private void SetStartTime(object sender, RoutedEventArgs e)
         {
-            SortRelativityImportance();
-            TaskManagerClass.InitializeMiddleResultListTasks();
-            TaskManagerClass.InitializeResultListTasks();
-
-            SumWFirst();
-
             Task.Run(() =>
             {
                 Dispatcher.Invoke(() =>
                 {
-                    this.pBar.Maximum = this._settingsParametrs.TaskCounts * this._settingsParametrs.ProcCount;
+                    this.pBar.Maximum = this._settingsParametrs.TaskCounts;
                     this.pBar.Value = 0;
                 });
 
-                for (int procCount = 0; procCount < _settingsParametrs.ProcCount; procCount++) // цикл количества процессоров
-                {
-                    if (TaskManagerClass.ListTasks.Count > 0)
-                    {
-                        for (int i = 0; i < TaskManagerClass.ListTasks.Count; i++)
-                        {
-                            FindLeft(OverlappingTasks(i));
+                SetTimeToStart();
 
-                            if (_min.TimeToStart >= 0)
-                            // если есть пересечение (есть "крайняя левая" задача с которой пересекается очередная), то:
-                            {
-                                if (InsertionCapability(i, OverlappingTasks(i)))
-                                // проверяется возможность вставки, и если вставка возможна, то:
-                                {
-                                    ShiftTasks(i); // сдвиг задач
-                                    InsertionTask(i, procCount); // вставка задачи
-                                    SortTimeToStart();
-                                }
-                            }
-                            else // если нет пересечения
-                            {
-                                if (InsertionCapability(i, OverlappingTasks(i)))
-                                // проверяется возможность вставки, и если вставка возможна, то:
-                                {
-                                    InsertionTask(i, procCount); // вставка задачи
-                                    SortTimeToStart();
-                                }
-                            }
-
-                            Dispatcher.Invoke(() =>
-                            {
-                                this.pBar.Value++;
-                            });
-                        }
-
-                        Dispatcher.Invoke(() =>
-                        {
-                            //this.pBar.Maximum = this.pBar.Maximum - (TaskManagerClass.MiddleResultListTasks.Count * this._settingsParametrs.ProcCount);
-                            for (int k = 0; k < TaskManagerClass.ResultListTasks.Count; k++)
-                            {
-                                this.pBar.Value++;
-                            }
-                        });
-                    }
-                    else
-                    {
-                        Dispatcher.Invoke(() =>
-                        {
-                            for (int k = 0; k < this._settingsParametrs.TaskCounts; k++)
-                            {
-                                this.pBar.Value++;
-                            }
-                        });
-                    }
-
-                    TaskManagerClass.ResultListTasks.AddRange(TaskManagerClass.MiddleResultListTasks); // перенос из промежуточного в результирующий список элементов
-                    TaskManagerClass.MiddleResultListTasks.Clear(); // удаление всех элементов промежуточного списка
-                    DeleteTasks(); // удаление элементов выставленных в результирующий список из начального списка
-                    _min = null;
-                }
-
-            SetResultIndexNumber();
-
-            }).ContinueWith(task => {
-
+            }).ContinueWith(task =>
+            {
                 Dispatcher.Invoke(() =>
                 {
-                    var sheduleWindow = new SheduleWindow(this._settingsParametrs, this._sumWFirst);
-                    sheduleWindow.Show();
+                    var fullParametersWindow = new FullParametrsWindow(this._settingsParametrs);
+                    fullParametersWindow.Show();
                     this.Close();
-                });
+                });                
             });
         }
 
-        /// <summary>
-        /// сумма важностей всех задач
-        /// </summary>
-        public void SumWFirst()
+        public void SetTimeToStart()
         {
             for (int i = 0; i < TaskManagerClass.ListTasks.Count; i++)
-                _sumWFirst += TaskManagerClass.ListTasks[i].Importance;
-        }
-
-        /// <summary>
-        /// сортировка по относительной важности
-        /// </summary>
-        public void SortRelativityImportance()
-        {
-            TaskManagerClass.ListTasks = TaskManagerClass.ListTasks.OrderByDescending(l => l.RelativityImportance).ToList();
-        }
-        
-        /// <summary>
-        /// поиск крайней левой задачи
-        /// </summary>
-        /// <param name="list"> список задач с которыми пересекается очередная </param>
-        public void FindLeft(List<TaskClass> list)
-        {
-            if (list.Count != 0) // если список пересекающихся задач не нулевой, то первый эл-т явл. крайним "левым"
             {
-                _min = new TaskClass
+                double dispr = TaskManagerClass.ListTasks[i].Dispr;
+                double math = TaskManagerClass.ListTasks[i].Mathematic;
+
+                double c1 = 100000, c2 = 0.05;
+                double c, a, timeToStart;
+                Random rand = new Random();
+
+                double secondMoment = dispr + Math.Pow(math, 2);
+                double e = 1e-7;
+                double E = secondMoment / Math.Pow(math, 2);
+                double middleC, middleK = 100;
+
+                while (Math.Abs(middleK - E) > e)
                 {
-                    TimeToStart = list[0].TimeToStart,
-                    TimeToWork = list[0].TimeToWork,
-                    Importance = list[0].Importance,
-                    IndexNumber = list[0].IndexNumber
-                };
-            }
-            else
-            {
-                _min = new TaskClass
-                {
-                    TimeToStart = -1
-                };
-            }
-        }
+                    middleC = (c1 + c2) / 2;
 
-        /// <summary>
-        /// поиска задач, с которыми персекается очередная
-        /// </summary>
-        /// <param name="next_task"> номер следующей задачи </param>
-        /// <returns> возвращает список задач с которыми пересекается очередная </returns>
-        public List<TaskClass> OverlappingTasks(int next_task)
-        {
-            List<TaskClass> numbers = new List<TaskClass>();
+                    middleK = Gamma((2 / middleC) + 1) / Math.Pow(Gamma((1 / middleC) + 1), 2);
 
-            for (int i = 0; i < TaskManagerClass.MiddleResultListTasks.Count; i++)
-            {
-                // пересечение справа
-                bool intersectionRight = (TaskManagerClass.ListTasks[next_task].TimeToStart < TaskManagerClass.MiddleResultListTasks[i].TimeToEnd) &&
-                    (TaskManagerClass.ListTasks[next_task].TimeToStart >= TaskManagerClass.MiddleResultListTasks[i].TimeToStart);
-
-                // пересечение слева
-                bool intersectionLeft = (TaskManagerClass.ListTasks[next_task].TimeToEnd > TaskManagerClass.MiddleResultListTasks[i].TimeToStart) &&
-                    (TaskManagerClass.ListTasks[next_task].TimeToEnd <= TaskManagerClass.MiddleResultListTasks[i].TimeToEnd);
-
-                // пришедшая задача "поглощает" пересекаемую 
-                bool intersectionRightLeft = (TaskManagerClass.ListTasks[next_task].TimeToStart < TaskManagerClass.MiddleResultListTasks[i].TimeToStart) &&
-                    (TaskManagerClass.ListTasks[next_task].TimeToEnd > TaskManagerClass.MiddleResultListTasks[i].TimeToEnd);
-
-                if (intersectionLeft || intersectionRight || intersectionRightLeft)
-                {
-                    numbers.Add(TaskManagerClass.MiddleResultListTasks[i]); // в списке number храняться номера задач с которыми
-                                                                            // пересекается очередная "пришедшая" 
-                }
-            }
-
-            return numbers;
-        }
-
-        /// <summary>
-        /// проверка возможность вставки очередной задачи
-        /// </summary>
-        /// <param name="settingsParametrs"></param>
-        /// <param name="next_task"> номер следующей задачи </param>
-        /// <param name="list"> список задач с которыми пересекается очередная </param>
-        /// <returns></returns>
-        public bool InsertionCapability(int next_task, List<TaskClass> list)
-        {
-            double x;
-
-            if (_min.TimeToStart == -1) // проверка вставки при отсутствии пересечения
-            {
-                if (TaskManagerClass.ListTasks[next_task].TimeToEnd <= this._settingsParametrs.DirectTime)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else // проверка вставки при наличии пересечения
-            {
-                if (TaskManagerClass.ListTasks[next_task].TimeToStart >= _min.TimeToStart) //если время старта очередной >= 
-                                                                                           //времени старта крайней левой задачи, то
-                {
-                    x = this._settingsParametrs.DirectTime - _min.TimeToEnd;
-
-                    double y = x;
-
-                    for (int i = 0; i < TaskManagerClass.MiddleResultListTasks.Count; i++)
+                    if (middleK <= E)
                     {
-                        if (TaskManagerClass.MiddleResultListTasks[i].TimeToStart >= _min.TimeToEnd)
-                        {
-                            y -= TaskManagerClass.MiddleResultListTasks[i].TimeToWork;
-                        }
-                    }
-
-                    bool firstCheck = TaskManagerClass.ListTasks[next_task].TimeToEnd <= this._settingsParametrs.DirectTime;
-                    bool secondCheck = TaskManagerClass.ListTasks[next_task].TimeToWork <= x;
-                    bool thirdCheck = TaskManagerClass.ListTasks[next_task].TimeToWork <= y;
-
-                    if (firstCheck && secondCheck && thirdCheck)
-                    {
-                        return true;
+                        c1 = middleC;
                     }
                     else
                     {
-                        return false;
-                    }
+                        c2 = middleC;
+                    };
+
+                    System.Threading.Thread.Sleep(rand.Next(1,50));
                 }
-                else //если время старта очередной задачи < 
-                     //времени старта крайней левой задачи, то
+                
+            
+                c = (c1 + c2) / 2;
+                a = math / (Gamma((1 / c) + 1)); 
+
+                timeToStart = a * Math.Pow(Math.Log(10), (1 / c));
+                TaskManagerClass.ListTasks[i].TimeToStart = Math.Round(timeToStart, 2);
+
+                Dispatcher.Invoke(() =>
                 {
-                    x = this._settingsParametrs.DirectTime - TaskManagerClass.ListTasks[next_task].TimeToEnd;
-
-                    double y = x;
-
-                    for (int i = 0; i < TaskManagerClass.MiddleResultListTasks.Count; i++)
-                    {
-                        if (TaskManagerClass.MiddleResultListTasks[i].TimeToStart >= TaskManagerClass.ListTasks[next_task].TimeToEnd)
-                        {
-                            y -= TaskManagerClass.MiddleResultListTasks[i].TimeToWork;
-                        }
-                    }
-
-                    var sumTimeToWork = 0;
-                    for (int i = 0; i < list.Count; i++)
-                    {
-                        sumTimeToWork += list[i].TimeToWork; // сумма времен работы задач с которыми пересекается очередная
-                    }
-
-                    bool firstCheck = TaskManagerClass.ListTasks[next_task].TimeToEnd < this._settingsParametrs.DirectTime;
-                    bool secondCheck = sumTimeToWork <= x;
-                    bool thirdCheck = sumTimeToWork <= y;
-
-                    if (firstCheck && secondCheck && thirdCheck)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
+                    this.pBar.Value++;
+                });
             }
         }
 
-        /// <summary>
-        /// поиск задач подлежащих сдвигу, и их сдвиг
-        /// </summary>
-        /// <param name="settingsParametrs"></param>
-        /// <param name="next_task"> количество задач в ResultTaskList и, в тоже время, номер очередной "пришедшей" задачи </param>
-        public void ShiftTasks(int next_task)
+        public double Gamma(double c)
+
         {
-            if (TaskManagerClass.ListTasks[next_task].TimeToStart >= _min.TimeToStart) // если время старта очередной >= 
-                                                                                  // времени старта крайней левой задачи, то
-            {
-                int newTimeToStart = _min.TimeToEnd + TaskManagerClass.ListTasks[next_task].TimeToWork; // время с которого начнуться новые хадачи
+            double x = c - 1;
 
-                for (int i = 0; i < TaskManagerClass.MiddleResultListTasks.Count; i++)
-                {
-                    if ((TaskManagerClass.MiddleResultListTasks[i].TimeToStart > _min.TimeToStart) &&
-                       (TaskManagerClass.MiddleResultListTasks[i].TimeToStart < newTimeToStart))
-                    {
-                        TaskManagerClass.MiddleResultListTasks[i].TimeToStart = newTimeToStart;
-                        newTimeToStart += TaskManagerClass.MiddleResultListTasks[i].TimeToWork;
-                    }
-                }
-            }
-            else // если время старта очередной < 
-                 // времени старта крайней левой задачи, то
-            {
-                int newTimeToStart = TaskManagerClass.ListTasks[next_task].TimeToEnd; // время с которого начнуться новые хадачи
+            double c0 = 2.5066282746310005;
+            double c1 = 1.0000000000190015;
+            double c2 = 76.18009172947146;
+            double c3 = -86.50532032941677;
+            double c4 = 24.01409824083091;
+            double c5 = -1.231739572450155;
+            double c6 = 1.208650973866179e-3;
+            double c7 = -5.395239384953e-6;
 
-                for (int i = 0; i < TaskManagerClass.MiddleResultListTasks.Count; i++)
-                {
-                    if ((TaskManagerClass.MiddleResultListTasks[i].TimeToStart >= _min.TimeToStart) &&
-                       (TaskManagerClass.MiddleResultListTasks[i].TimeToStart < newTimeToStart))
-                    {
-                        TaskManagerClass.MiddleResultListTasks[i].TimeToStart = newTimeToStart;
-                        newTimeToStart += TaskManagerClass.MiddleResultListTasks[i].TimeToWork;
-                    }
-                }
-            }
-        }
+            double gamma2 = (x + 0.5) * Math.Log(x + 5.5) - (x + 5.5) + Math.Log(c0 * (c1 + c2/(x + 1) + c3/(x + 2) +
+                c4/(x + 3) + c5/(x + 4) + c6/(x + 5) + c7/(x + 6)));
 
-        /// <summary>
-        /// вставка очередной задачи
-        /// </summary>
-        /// <param name="next_task"> порядковый номер очередной задачи </param>
-        /// <param name="proc"> порядковый номер текущего процессора </param>
-        public void InsertionTask(int next_task, int proc)
-        {
-            if (_min.TimeToStart == -1) // если нету пересечения, то вставляем задачу
-            {
-                TaskManagerClass.ListTasks[next_task].NumberProc = proc + 1;
-                TaskManagerClass.MiddleResultListTasks.Add(TaskManagerClass.ListTasks[next_task]);
-            }
-            else // если есть пересечение
-            {
-                if ((TaskManagerClass.ListTasks[next_task].TimeToStart >= _min.TimeToStart) &&
-                (TaskManagerClass.ListTasks[next_task].TimeToStart < _min.TimeToEnd))
-                {
-                    TaskManagerClass.ListTasks[next_task].TimeToStart = _min.TimeToEnd;
-                }
+            gamma2 = Math.Exp(gamma2);
 
-                TaskManagerClass.ListTasks[next_task].NumberProc = proc + 1;
-                TaskManagerClass.MiddleResultListTasks.Add(TaskManagerClass.ListTasks[next_task]);
-            }
-        }
-
-        /// <summary>
-        /// сортировка элементов по времени старта
-        /// </summary>
-        public void SortTimeToStart()
-        {
-            TaskManagerClass.MiddleResultListTasks = TaskManagerClass.MiddleResultListTasks.OrderBy(l => l.TimeToStart).ToList();
-        }
-
-        /// <summary>
-        /// удаление совпадающих задач
-        /// </summary>
-        public void DeleteTasks()
-        {
-            foreach (var task in TaskManagerClass.ResultListTasks)
-            {
-                TaskManagerClass.ListTasks.RemoveAll(t => t.Guid == task.Guid);
-            }
-        }
-
-        /// <summary>
-        /// присвоение порядкового номера
-        /// </summary>
-        public void SetResultIndexNumber()
-        {
-            for (int i = 0; i < TaskManagerClass.ResultListTasks.Count; i++)
-            {
-                TaskManagerClass.ResultListTasks[i].ResultIndexNumber = i + 1;
-            }
+            return gamma2;
         }
     }
 }

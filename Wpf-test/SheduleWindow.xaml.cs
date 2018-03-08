@@ -166,5 +166,11 @@ namespace Wpf_test
                 ResultTasksListTextBox.AppendText("\n  Работа алгоритма ВЕРНА, персечений нет");
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var graficWindow = new GraficWindow();
+            graficWindow.Show();
+        }
     }
 }

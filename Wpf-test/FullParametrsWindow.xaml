@@ -1,43 +1,42 @@
-﻿<Window x:Class="Wpf_test.SheduleWindow"
+﻿<Window x:Class="Wpf_test.FullParametrsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_test"
         mc:Ignorable="d"
-        Title="SheduleWindow" Height="500" Width="1000"
-        MinHeight="500" MinWidth="1000"
+        Title="Full Parameters Window" Height="500" Width="630"
+        MinHeight="500" MinWidth="630"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanResizeWithGrip" Background="Azure">
+        ResizeMode="CanResizeWithGrip"
+        Background="Azure">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="420"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="100"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Button Content="Back" Grid.Column="2" Margin="0,10,15,0" Width="80" Click="GoBack" HorizontalAlignment="Right" Height="23" VerticalAlignment="Top"/>
+        <Button Content="Schedule" Grid.Column="1" Margin="0,0,15,10" Width="80" Height="23" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="MakeShedule"/>
+        <Button Content="Back" Grid.Column="1" Margin="0,10,15,0" VerticalAlignment="Top" Height="23" HorizontalAlignment="Right" Width="80"/>
 
-        <Label Grid.Column="2" Content="  Proc" Margin="20,191,30,215" Height="23" Width="50" VerticalAlignment="Center" />
+        <ProgressBar Margin="10,0,10,10" Name="pBar" Grid.Row="1"/>
 
-        <TextBox Grid.Column="2" Margin="20,221,30,183" TextWrapping="Wrap" Name="ProcCountTextBox" Height="25" Width="50" VerticalAlignment="Center" IsReadOnly="True" BorderBrush="Black" TextAlignment="Center"/>
+        <Label Grid.Column="1" Content="  Proc" Margin="20,178,30,188" Height="23" Width="50" VerticalAlignment="Center" />
+        <TextBox Grid.Column="1" Margin="20,208,30,156" TextWrapping="Wrap" x:Name="ProcCountTextBox" Height="25" Width="50" VerticalAlignment="Center" IsReadOnly="True" BorderBrush="Black" TextAlignment="Center"/>
+        <Label Grid.Column="1" Content="TimeD" Margin="22,254,28,112" Height="23" Width="50" VerticalAlignment="Center"/>
+        <TextBox Grid.Column="1" Margin="20,283,30,81" TextWrapping="Wrap" x:Name="DirectTimeTextBox" Height="25" Width="50" VerticalAlignment="Center" IsReadOnly="True" BorderBrush="Black" TextAlignment="Center"/>
+        <Label Grid.Column="1" Content=" Tasks" Margin="20,106,30,259" Height="24" Width="50" VerticalAlignment="Center"/>
+        <TextBox Grid.Column="1" Margin="20,136,30,229" TextWrapping="Wrap" Name="TasksCountTextBox" Height="24" Width="50" VerticalAlignment="Center" IsReadOnly="True" BorderBrush="Black" TextAlignment="Center"/>
 
-        <Label Grid.Column="2" Content="TimeD" Margin="20,267,30,139" Height="23" Width="50" VerticalAlignment="Center"/>
-
-        <TextBox Grid.Column="2" Margin="20,296,30,108" TextWrapping="Wrap" Name="DirectTimeTextBox" Height="25" Width="50" VerticalAlignment="Center" IsReadOnly="True" BorderBrush="Black" TextAlignment="Center"/>
-
-        <Label Grid.Column="2" Content=" Tasks" Margin="20,118,30,287" Height="24" Width="50" VerticalAlignment="Center"/>
-
-        <TextBox Grid.Column="2" Margin="20,148,30,257" TextWrapping="Wrap" Name="TasksCountTextBox" Height="24" Width="50" VerticalAlignment="Center" IsReadOnly="True" BorderBrush="Black" TextAlignment="Center"/>
-
-        <DataGrid Grid.Column="0" Margin="10,10,10,10" Name="ResultGrid" RowBackground="LightCyan" AlternatingRowBackground="White" HorizontalScrollBarVisibility ="Auto" VerticalScrollBarVisibility ="Auto"
+        <DataGrid Margin="10,9,10,11" Grid.Column="0" Name="FullParametersWindowGrid" RowBackground="LightCyan" AlternatingRowBackground="White" HorizontalScrollBarVisibility ="Auto" VerticalScrollBarVisibility ="Auto"
                   IsReadOnly="True" GridLinesVisibility="Vertical" AutoGenerateColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"
                   CanUserReorderColumns="False" VerticalGridLinesBrush="LightBlue">
             <DataGrid.Columns>
-                <DataGridTextColumn Header=" № " Binding="{Binding Path=ResultIndexNumber}">
+                <DataGridTextColumn Header=" № " Binding="{Binding Path=IndexNumber}">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="TextAlignment" Value="Center"/>
@@ -69,18 +68,23 @@
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
 
-                <DataGridTextColumn Header=" Процессор" Binding="{Binding Path=NumberProc}">
+                <DataGridTextColumn Header=" Мат.ожидание" Binding="{Binding Path=Mathematic}">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="TextAlignment" Value="Center"/>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
+
+                <DataGridTextColumn Header=" Дисперсия" Binding="{Binding Path=Dispr}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+
             </DataGrid.Columns>
         </DataGrid>
-
-        <TextBox Grid.Column="1" Margin="10,10,10,10" TextWrapping="NoWrap" Background="White" Name="ResultTasksListTextBox" VerticalScrollBarVisibility="Auto" IsReadOnly="True"/>
-        <Button Content="Make Grafic" Grid.Column="2" Margin="0,0,15,10" HorizontalAlignment="Right" Width="80" Height="23" VerticalAlignment="Bottom" Click="Button_Click" />
-
     </Grid>
 </Window>
