@@ -27,40 +27,44 @@ namespace Wpf_test
         {
             this._settingsParametrs = settingsParametrs;
             InitializeComponent();
-            FillSettingsValues(settingsParametrs);            
+            FillSettingsValues();            
         }
 
-        private void FillSettingsValues(SettingsParametrs settingsParametrs)
+        private void FillSettingsValues()
         {
-            ProcCountTextBox.Text = settingsParametrs.ProcCount.ToString();
-            DirectTimeTextBox.Text = settingsParametrs.DirectTime.ToString();
-            TasksCountTextBox.Text = settingsParametrs.TaskCounts.ToString();
+            ProcCountTextBox.Text = this._settingsParametrs.ProcCount.ToString();
+            DirectTimeTextBox.Text = this._settingsParametrs.DirectTime.ToString();
+            TasksCountTextBox.Text = this._settingsParametrs.TaskCounts.ToString();
 
-            GenerateTable(settingsParametrs);
+            GenerateTable();
         }
 
-        private void GenerateTable(SettingsParametrs settingsParametrs)
+        /// <summary>
+        /// установка параметров задач и занесение в таблицу
+        /// </summary>
+        /// <param name="settingsParametrs"></param>
+        private void GenerateTable()
         {
-            if (settingsParametrs.InputType == Enums.InputType.Random)
+            if (this._settingsParametrs.InputType == Enums.InputType.Random)
             {
                 Random rand = new Random();
 
                 TaskManagerClass.InitializeListTasks();
 
-                for (int count = 0; count < settingsParametrs.TaskCounts; count++)
+                for (int count = 0; count < this._settingsParametrs.TaskCounts; count++)
                 {
                     var task = new TaskClass
                     {
-                        Mathematic = rand.Next(1,100000),
-                        Dispr = rand.Next(1,100000),
+                        Mathematic = rand.Next(1,50000),
+                        Dispr = rand.Next(1,50000),
                         TimeToWork = rand.Next(1, 420), // значение от 1c до 7мин
                         Importance = rand.Next(1, 100), // значение от 1 до 100
                         IndexNumber = count + 1,
                         Guid = Guid.NewGuid()
                     };
 
-                    task.Mathematic = task.Mathematic / 10; // сведение к интервалу (0.01; 100)
-                    task.Dispr = task.Dispr / 10; // сведение к интервалу (0.01; 100)
+                    task.Mathematic = task.Mathematic / 10; // сведение к интервалу (0.1; 5000)
+                    task.Dispr = task.Dispr / 10; // сведение к интервалу (0.1; 5000)
 
                     TaskManagerClass.ListTasks.Add(task);
                 }
@@ -95,6 +99,7 @@ namespace Wpf_test
 
                 SetTimeToStart();
 
+
             }).ContinueWith(task =>
             {
                 Dispatcher.Invoke(() =>
@@ -106,6 +111,9 @@ namespace Wpf_test
             });
         }
 
+        /// <summary>
+        /// расчет начального времени
+        /// </summary>
         public void SetTimeToStart()
         {
             for (int i = 0; i < TaskManagerClass.ListTasks.Count; i++)
@@ -137,7 +145,7 @@ namespace Wpf_test
                         c2 = middleC;
                     };
 
-                    System.Threading.Thread.Sleep(rand.Next(1,50));
+                    System.Threading.Thread.Sleep(rand.Next(1,10));
                 }
                 
             
@@ -154,6 +162,11 @@ namespace Wpf_test
             }
         }
 
+        /// <summary>
+        /// расчет гамма функции
+        /// </summary>
+        /// <param name="c"> параметр функции </param>
+        /// <returns></returns>
         public double Gamma(double c)
 
         {
@@ -175,5 +188,6 @@ namespace Wpf_test
 
             return gamma2;
         }
+
     }
 }

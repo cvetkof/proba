@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Runtime.Serialization;
 
 namespace Wpf_test
 {
@@ -21,6 +22,7 @@ namespace Wpf_test
     public partial class MainWindow : Window
     {
         public int _openedManuallyWindows = 0; // счетчик окон
+        public int _countTasks = 0;
         public MainWindow()
         {
             InitializeComponent();
@@ -29,9 +31,13 @@ namespace Wpf_test
         private void GenerateRandValueButton_Click(object sender, RoutedEventArgs e)
         {
             var settingsParametrs = GetSettingsParametrs(Enums.InputType.Random);
-            var parametesWindow = new ParametersWindow(settingsParametrs);
-            this.Close();
-            parametesWindow.Show();
+
+            if ((settingsParametrs.DirectTime != 0) && (settingsParametrs.ProcCount != 0) && (settingsParametrs.TaskCounts != 0))
+            {
+                var parametesWindow = new ParametersWindow(settingsParametrs);
+                parametesWindow.Show();
+                this.Close();
+            }
         }
 
         private void EnterValueManuallyButton_Click(object sender, RoutedEventArgs e)
@@ -52,40 +58,52 @@ namespace Wpf_test
         {
             var settingsParametrs = GetSettingsParametrs(Enums.InputType.Manually);
 
-            if (this._openedManuallyWindows < settingsParametrs.TaskCounts)
+            this._countTasks++;
+            if (this._countTasks == TaskManagerClass.ListTasks.Count)
             {
-                var manuallyInpunWindow = new ManuallyInputWindow();
-                this._openedManuallyWindows++;
-                manuallyInpunWindow.NumberTask.Text = Convert.ToString(this._openedManuallyWindows);
-                manuallyInpunWindow.NumberTask_Copy.Text = "-ая задача:";
-                manuallyInpunWindow.Show();
-                manuallyInpunWindow.Closed += ManuallyInpunWindow_Closed;
-            }
-            else
-            {
-                var parametesWindow = new ParametersWindow(settingsParametrs);
-                parametesWindow.Show();
-            }
+                if (this._openedManuallyWindows < settingsParametrs.TaskCounts)
+                {
+                    var manuallyInpunWindow = new ManuallyInputWindow();
+                    this._openedManuallyWindows++;
 
+                    manuallyInpunWindow.NumberTask.Text = Convert.ToString(this._openedManuallyWindows);
+                    manuallyInpunWindow.NumberTask_Copy.Text = "-ая задача:";
+                    manuallyInpunWindow.Show();
+                    manuallyInpunWindow.Closed += ManuallyInpunWindow_Closed;
+                }
+                else
+                {
+                    var parametesWindow = new ParametersWindow(settingsParametrs);
+                    parametesWindow.Show();
+                    this.Close();
+                }
+            }
         }
 
         private SettingsParametrs GetSettingsParametrs(Enums.InputType inputType) // метод, присваивающий полям объкта значения,
                                                                                   // введеные в начальном окне  
         {
-            int taskCountTextBoxValue = Convert.ToInt32(TaskCountTextBox.Text);
-
-            int procCountTextBoxValue = Convert.ToInt32(ProcCountTextBox.Text);
-
-            double directTimeTextBoxValue = Convert.ToDouble(DirectTimeTextBox.Text);
-
             var settingParametrs = new SettingsParametrs()
             {
-                ProcCount = procCountTextBoxValue, //количество процессоров
-                DirectTime = directTimeTextBoxValue, //директивное время
                 InputType = inputType, // тип ввода значений матрицы
-                TaskCounts = taskCountTextBoxValue // количество задач
             };
-            
+
+            if ((Int32.TryParse(TaskCountTextBox.Text, out int taskCountTextBoxValue)) && (Int32.TryParse(ProcCountTextBox.Text, out int procCountTextBoxValue))
+                && (Double.TryParse(DirectTimeTextBox.Text, out double directTimeTextBoxValue)))
+            {
+                settingParametrs.TaskCounts = taskCountTextBoxValue; // количество задач
+                settingParametrs.ProcCount = procCountTextBoxValue; //количество процессоров
+                settingParametrs.DirectTime = directTimeTextBoxValue; //директивное время
+            }
+            else
+            {
+                settingParametrs.TaskCounts = 0;
+                settingParametrs.DirectTime = 0;
+                settingParametrs.ProcCount = 0;
+                var exceptionWindow = new ExceptionWindow();
+                exceptionWindow.Show();
+                this.Close();
+            }
 
             return settingParametrs;
         }

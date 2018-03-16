@@ -20,13 +20,16 @@ namespace Wpf_test
     public partial class SheduleWindow : Window
     {
 
+        private SettingsParametrs _settingsParametrs;
+
         private TaskClass _min = new TaskClass(); //в min хранится первая задача с которой пересекается очередная "пришедшая" задача
         //private ParametersWindow _parametersWindow;
   
         public SheduleWindow(SettingsParametrs settingsParametrs, int sumWFirst)
         {
-            InitializeComponent();
+            this._settingsParametrs = settingsParametrs;
 
+            InitializeComponent();
             FillSettingsValues(settingsParametrs);
 
             ResultGrid.ItemsSource = TaskManagerClass.ResultListTasks;
@@ -34,7 +37,7 @@ namespace Wpf_test
             
             //OutputResultListTasks(settingsParametrs);
 
-            ProcResult(settingsParametrs);
+            ProcResult();
 
             OutputW(SumWSecod(), sumWFirst);
 
@@ -59,12 +62,12 @@ namespace Wpf_test
         /// какое количество задач на каждом процессоре
         /// </summary>
         /// <param name="settingsParametrs"></param>
-        public void ProcResult(SettingsParametrs settingsParametrs)
+        public void ProcResult()
         {
 
             int count1 = 0;
-            var count2 = settingsParametrs.DirectTime;
-            for (int count = 0; count < settingsParametrs.ProcCount; count++)
+            var count2 = this._settingsParametrs.DirectTime;
+            for (int count = 0; count < this._settingsParametrs.ProcCount; count++)
             {
                 for (int i = 0; i < TaskManagerClass.ResultListTasks.Count; i++)
                 {
@@ -74,13 +77,13 @@ namespace Wpf_test
                         count2 -= TaskManagerClass.ResultListTasks[i].TimeToWork;
                 }
 
-                var percent_proc = Math.Round(((count2 / settingsParametrs.DirectTime) * 100), 1);
+                var percent_proc = Math.Round(((count2 / this._settingsParametrs.DirectTime) * 100), 1);
                 ResultTasksListTextBox.AppendText("  " + (count + 1) + "-ый процессор - " + (count1) + " задач; время простоя - " + count2 + " (" + percent_proc + "%)\n");
                 count1 = 0;
-                count2 = settingsParametrs.DirectTime;
+                count2 = this._settingsParametrs.DirectTime;
             }
 
-            double value = (Convert.ToDouble(TaskManagerClass.ResultListTasks.Count) / Convert.ToDouble(settingsParametrs.TaskCounts)) * 100;
+            double value = (Convert.ToDouble(TaskManagerClass.ResultListTasks.Count) / Convert.ToDouble(this._settingsParametrs.TaskCounts)) * 100;
             var percent_tasks = Math.Round((value), 2);
             ResultTasksListTextBox.AppendText("\n  Количество задач выставленных на обработку = " + TaskManagerClass.ResultListTasks.Count + " (" + percent_tasks + "%)");
 
@@ -169,7 +172,7 @@ namespace Wpf_test
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var graficWindow = new GraficWindow();
+            var graficWindow = new GraficWindow(this._settingsParametrs);
             graficWindow.Show();
         }
     }

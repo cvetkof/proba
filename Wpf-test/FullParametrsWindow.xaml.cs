@@ -31,7 +31,6 @@ namespace Wpf_test
 
             FullParametersWindowGrid.ItemsSource = TaskManagerClass.ListTasks;
             FullParametersWindowGrid.ColumnWidth = DataGridLength.Auto;
-
         }
 
         private void MakeShedule(object sender, RoutedEventArgs e)
@@ -41,6 +40,8 @@ namespace Wpf_test
             TaskManagerClass.InitializeResultListTasks();
 
             SumWFirst();
+            int sumTasks = TaskManagerClass.ListTasks.Count;
+            Random rand = new Random();
 
             Task.Run(() =>
             {
@@ -78,6 +79,8 @@ namespace Wpf_test
                                     SortTimeToStart();
                                 }
                             }
+
+                            if(sumTasks <= 100) System.Threading.Thread.Sleep(rand.Next(1, 10));
 
                             Dispatcher.Invoke(() =>
                             {
@@ -130,7 +133,6 @@ namespace Wpf_test
             DirectTimeTextBox.Text = this._settingsParametrs.DirectTime.ToString();
             TasksCountTextBox.Text = this._settingsParametrs.TaskCounts.ToString();
         }
-
 
         /// <summary>
         /// сумма важностей всех задач
@@ -390,5 +392,12 @@ namespace Wpf_test
             }
         }
 
+        
+        private void GoBack(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();
+        }
     }
 }

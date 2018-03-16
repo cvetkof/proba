@@ -25,19 +25,29 @@ namespace Wpf_test
         }
         private void OK_Button_Click(object sender, RoutedEventArgs e)
         {
-
             var task = new TaskClass
             {
-                Mathematic = Convert.ToDouble(this.MathTextBox.Text),
-                Dispr = Convert.ToDouble(this.DisprTextBox.Text),
-                TimeToWork = Convert.ToInt16(this.TimeToWorkTextBox.Text),
-                Importance = Convert.ToInt16(this.ImportanceTextBox.Text),
-                IndexNumber = Convert.ToInt16(NumberTask.Text),
+                IndexNumber = Convert.ToInt32(NumberTask.Text),
                 Guid = Guid.NewGuid()
             };
 
-            TaskManagerClass.ListTasks.Add(task);
-            this.Close();
+            if((Int32.TryParse(this.MathTextBox.Text, out int math)) && (Double.TryParse(this.DisprTextBox.Text, out double dispr)) &&
+                (Int32.TryParse(this.TimeToWorkTextBox.Text, out int twork)) && (Int32.TryParse(this.ImportanceTextBox.Text, out int imp)))
+            {
+                task.Mathematic = math;
+                task.Dispr = dispr;
+                task.TimeToWork = twork;
+                task.Importance = imp;
+
+                TaskManagerClass.ListTasks.Add(task);
+                this.Close();
+            }
+            else
+            {
+                var exceptionWindow = new ExceptionWindow();
+                exceptionWindow.Show();
+                this.Close();
+            }
         }
     }
 }
