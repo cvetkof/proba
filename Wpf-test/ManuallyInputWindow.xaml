@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_test"
         mc:Ignorable="d"
-        Title="ManuallyInputWindow" Height="200" Width="350"
+        Title="TheSystemRoy" Height="200" Width="350"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Background="Azure">
     <Grid>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="95,79,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="53" BorderBrush="Black" Name="MathTextBox" />
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="153,79,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="53" BorderBrush="Black" Name="DisprTextBox" />
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="211,79,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="53" BorderBrush="Black" Name="TimeToWorkTextBox" />
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="269,79,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="53" BorderBrush="Black" Name="ImportanceTextBox" />
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="95,79,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="53" BorderBrush="Black" Name="MathTextBox" TextChanged="MathTextBox_TextChanged" />
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="153,79,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="53" BorderBrush="Black" Name="DisprTextBox" TextChanged="DisprTextBox_TextChanged" />
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="211,79,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="53" BorderBrush="Black" Name="TimeToWorkTextBox" TextChanged="TimeToWorkTextBox_TextChanged" />
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="269,79,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="53" BorderBrush="Black" Name="ImportanceTextBox" TextChanged="ImportanceTextBox_TextChanged" />
 
         <Button Content="OK" HorizontalAlignment="Left" Margin="95,118,0,0" VerticalAlignment="Top" Width="227" Height="23" Click="OK_Button_Click"/>
 

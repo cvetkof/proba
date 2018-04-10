@@ -130,6 +130,7 @@ namespace Wpf_test
                 double E = secondMoment / Math.Pow(math, 2);
                 double middleC, middleK = 100;
 
+
                 while (Math.Abs(middleK - E) > e)
                 {
                     middleC = (c1 + c2) / 2;
@@ -145,7 +146,7 @@ namespace Wpf_test
                         c2 = middleC;
                     };
 
-                    System.Threading.Thread.Sleep(rand.Next(1,10));
+                    //System.Threading.Thread.Sleep(rand.Next(1,10));
                 }
                 
             

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.IO;
 
 namespace Wpf_test
 {
@@ -41,7 +42,9 @@ namespace Wpf_test
 
             OutputW(SumWSecod(), sumWFirst);
 
-            Checking(settingsParametrs);
+            //OutputToFile();
+
+            //Checking(settingsParametrs);
         }
 
         private void GoBack(object sender, RoutedEventArgs e)
@@ -67,6 +70,8 @@ namespace Wpf_test
 
             int count1 = 0;
             var count2 = this._settingsParametrs.DirectTime;
+            int sumImportance = 0;
+
             for (int count = 0; count < this._settingsParametrs.ProcCount; count++)
             {
                 for (int i = 0; i < TaskManagerClass.ResultListTasks.Count; i++)
@@ -75,17 +80,20 @@ namespace Wpf_test
                         count1++;
                     if ((count + 1) == TaskManagerClass.ResultListTasks[i].NumberProc)
                         count2 -= TaskManagerClass.ResultListTasks[i].TimeToWork;
+                    if ((count + 1) == TaskManagerClass.ResultListTasks[i].NumberProc)
+                        sumImportance += TaskManagerClass.ResultListTasks[i].Importance;
                 }
 
                 var percent_proc = Math.Round(((count2 / this._settingsParametrs.DirectTime) * 100), 1);
-                ResultTasksListTextBox.AppendText("  " + (count + 1) + "-ый процессор - " + (count1) + " задач; время простоя - " + count2 + " (" + percent_proc + "%)\n");
+                ResultTasksListTextBox.AppendText("  " + (count + 1) + "-ый процессор - " + (count1) + " задач     важность задач - " + sumImportance +"     время простоя - " + count2 + " (" + percent_proc + "%)\n");
                 count1 = 0;
                 count2 = this._settingsParametrs.DirectTime;
+                sumImportance = 0;
             }
 
             double value = (Convert.ToDouble(TaskManagerClass.ResultListTasks.Count) / Convert.ToDouble(this._settingsParametrs.TaskCounts)) * 100;
             var percent_tasks = Math.Round((value), 2);
-            ResultTasksListTextBox.AppendText("\n  Количество задач выставленных на обработку = " + TaskManagerClass.ResultListTasks.Count + " (" + percent_tasks + "%)");
+            ResultTasksListTextBox.AppendText("\n  Количество задач выставленных на обработку - " + TaskManagerClass.ResultListTasks.Count + " (" + percent_tasks + "%)");
 
         }
 
@@ -110,8 +118,8 @@ namespace Wpf_test
         public void OutputW(int sumWSecond, int sumWFirsrt)
         {
             double percent = (Convert.ToDouble(sumWSecond) / Convert.ToDouble(sumWFirsrt)) * 100;
-            ResultTasksListTextBox.AppendText("\n  суммарная важность всех задач - " + sumWFirsrt);
-            ResultTasksListTextBox.AppendText("\n  суммарная важность задач выставленных на обработку - " + sumWSecond + "(" + Math.Round(percent, 2) + "%)\n\n");
+            ResultTasksListTextBox.AppendText("\n  Cуммарная важность всех задач - " + sumWFirsrt);
+            ResultTasksListTextBox.AppendText("\n  Cуммарная важность задач выставленных на обработку - " + sumWSecond + "(" + Math.Round(percent, 2) + "%)\n\n");
         }
 
         /// <summary>
@@ -170,10 +178,23 @@ namespace Wpf_test
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Make_Grafic(object sender, RoutedEventArgs e)
         {
             var graficWindow = new GraficWindow(this._settingsParametrs);
             graficWindow.Show();
         }
+
+        //public void OutputToFile()
+        //{
+        //    File.AppendAllText("d:\\Shedule.docx", "№\tвремя старта\tвремя обработки");
+        //    File.AppendAllText("d:\\Shedule.docx", "\n");
+
+        //    for (int i = 0; i < TaskManagerClass.ResultListTasks.Count; i++)
+        //    {
+        //        File.AppendAllText("d:\\Shedule.docx", Convert.ToString(TaskManagerClass.ResultListTasks[i].IndexNumber) + "\t");
+        //        File.AppendAllText("d:\\Shedule.docx", Convert.ToString(TaskManagerClass.ResultListTasks[i].TimeToStart) + "\t");
+        //        File.AppendAllText("d:\\Shedule.docx", Convert.ToString(TaskManagerClass.ResultListTasks[i].TimeToWork) + "\n");
+        //    }
+        //}
     }
 }

@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_test"
         mc:Ignorable="d"
-        Title="SheduleWindow" Height="500" Width="1000"
-        MinHeight="500" MinWidth="1000"
+        Title="TheSystemRoy" Height="500" Width="1100"
+        MinHeight="500" MinWidth="1040"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResizeWithGrip" Background="Azure">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="420"></ColumnDefinition>
+            <ColumnDefinition Width="470"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="100"></ColumnDefinition>
         </Grid.ColumnDefinitions>
@@ -38,6 +38,14 @@
                   CanUserReorderColumns="False" VerticalGridLinesBrush="LightBlue">
             <DataGrid.Columns>
                 <DataGridTextColumn Header=" № " Binding="{Binding Path=ResultIndexNumber}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header=" № " Binding="{Binding Path=IndexNumber}">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="TextAlignment" Value="Center"/>
@@ -80,7 +88,9 @@
         </DataGrid>
 
         <TextBox Grid.Column="1" Margin="10,40,10,10" TextWrapping="NoWrap" Background="White" Name="ResultTasksListTextBox" VerticalScrollBarVisibility="Auto" IsReadOnly="True"/>
-        <Button Content="Make Grafic" Grid.Column="2" Margin="0,0,15,10" HorizontalAlignment="Right" Width="80" Height="23" VerticalAlignment="Bottom" Click="Button_Click" />
+
+        <Button Content="Make Graphic" Grid.Column="2" Margin="0,0,15,10" HorizontalAlignment="Right" Width="80" Height="23" VerticalAlignment="Bottom" Click="Make_Grafic" />
+        
         <TextBlock Grid.Column="1" Height="23" Margin="10,10,10,0" TextWrapping="Wrap" Text="Статистические данные" VerticalAlignment="Top" FontSize="14" TextAlignment="Center" FontWeight="SemiBold" FontStyle="Italic">
             <TextBlock.Background>
                 <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.GradientActiveCaptionColorKey}}"/>

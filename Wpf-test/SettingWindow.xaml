@@ -5,26 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_test"
         mc:Ignorable="d"
-        Title="SettingsWindow" Height="350" Width="525"
+        Title="TheSystemRoy" Height="340" Width="525"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         Background="Azure">
     <Grid>
-        <Label Content="Введите количество задач" Margin="41,47,271,0" Width="207" Height="32" VerticalAlignment="Top"/>
+        <Label Content="Введите количество задач (МКА)" Margin="41,47,271,0" Width="207" Height="32" VerticalAlignment="Top"/>
 
         <Label Content="Введите количество процессоров" Margin="41,107,271,0" Width="207" Height="32" VerticalAlignment="Top"/>
 
         <Label Content="Введите директивное время (сек)" Margin="41,166,271,0" Width="207" Height="32" VerticalAlignment="Top"/>
 
-        <TextBox Height="23" Margin="262,50,40,0" Text="1" VerticalAlignment="Top" Name="TaskCountTextBox" BorderBrush="Black" TextWrapping="Wrap"/>
-        <TextBox Height="23" Margin="262,110,40,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Name="ProcCountTextBox" BorderBrush="Black"/>
-        <TextBox Height="23" Margin="262,170,40,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Name="DirectTimeTextBox" BorderBrush="Black"/>
+        <TextBox Height="23" Margin="262,50,40,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top"  Name="TaskCountTextBox" BorderBrush="Black" TextChanged="TaskCountTextBox_TextChanged"/>
+        <TextBox Height="23" Margin="262,110,40,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Name="ProcCountTextBox" BorderBrush="Black" TextChanged="ProcCountTextBox_TextChanged"/>
+        <TextBox Height="23" Margin="262,170,40,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Name="DirectTimeTextBox" BorderBrush="Black" TextChanged="DirectTimeTextBox_TextChanged"/>
 
         <Button Content="Сгенерировать случайные значения" Margin="40,210,0,0" Name="GenerateRandValueButton" Click="GenerateRandValueButton_Click" Height="48" VerticalAlignment="Top" HorizontalAlignment="Left" Width="208"/>
         <Button Content="Ввести значения вручную" Margin="262,210,40,0" Name="EnterValueManuallyButton" Click="EnterValueManuallyButton_Click" Height="48" VerticalAlignment="Top"/>
 
-        <TextBlock Margin="40,0,40,25" TextWrapping="NoWrap" FontSize="10" FontStyle="Italic" FontWeight="Light" Height="15" VerticalAlignment="Bottom"><Run Text="24 кафедра, Информационно вычислительных систем и сетей                                   "/><Run Text="   СПБ, 2018"/></TextBlock>
-        <TextBlock Margin="40,0,0,7" TextWrapping="Wrap" Text="ефр. Цветков А. В." FontSize="10" FontWeight="Thin" FontStyle="Italic" HorizontalAlignment="Left" Width="439" Height="15" VerticalAlignment="Bottom"/>
+        <TextBlock Margin="40,0,170,25" TextWrapping="NoWrap" FontSize="10" FontStyle="Italic" FontWeight="Light" Height="15" VerticalAlignment="Bottom" Text="24 кафедра, Информационно вычислительных систем и сетей"/>
+        <TextBlock Margin="40,0,0,7" TextWrapping="Wrap" Text="ефр. Цветков А. В." FontSize="10" FontWeight="Light" FontStyle="Italic" HorizontalAlignment="Left" Width="289" Height="15" VerticalAlignment="Bottom"/>
+        <TextBlock Margin="409,0,40,25" TextWrapping="Wrap" Text="СПБ 2018" FontStyle="Italic" FontSize="10" FontWeight="Light" Height="15" VerticalAlignment="Bottom" TextAlignment="Right"/>
 
     </Grid>
 </Window>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wpf_test"
         mc:Ignorable="d"
-        Title="Full Parameters Window" Height="500" Width="630"
+        Title="TheSystemRoy" Height="500" Width="630"
         MinHeight="500" MinWidth="630"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResizeWithGrip"

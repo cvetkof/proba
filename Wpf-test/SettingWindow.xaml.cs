@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
 
 namespace Wpf_test
 {
@@ -88,24 +89,26 @@ namespace Wpf_test
                 InputType = inputType, // тип ввода значений матрицы
             };
 
-            if ((Int32.TryParse(TaskCountTextBox.Text, out int taskCountTextBoxValue)) && (Int32.TryParse(ProcCountTextBox.Text, out int procCountTextBoxValue))
-                && (Double.TryParse(DirectTimeTextBox.Text, out double directTimeTextBoxValue)))
-            {
-                settingParametrs.TaskCounts = taskCountTextBoxValue; // количество задач
-                settingParametrs.ProcCount = procCountTextBoxValue; //количество процессоров
-                settingParametrs.DirectTime = directTimeTextBoxValue; //директивное время
-            }
-            else
-            {
-                settingParametrs.TaskCounts = 0;
-                settingParametrs.DirectTime = 0;
-                settingParametrs.ProcCount = 0;
-                var exceptionWindow = new ExceptionWindow();
-                exceptionWindow.Show();
-                this.Close();
-            }
+                settingParametrs.TaskCounts = Convert.ToInt32(TaskCountTextBox.Text); // количество задач
+                settingParametrs.ProcCount = Convert.ToInt32(ProcCountTextBox.Text); //количество процессоров
+                settingParametrs.DirectTime = Convert.ToInt32(DirectTimeTextBox.Text); //директивное время
 
             return settingParametrs;
+        }
+
+        private void TaskCountTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this.TaskCountTextBox.Text = Regex.Replace(this.TaskCountTextBox.Text, "[^0-9]+", "");
+        }
+
+        private void ProcCountTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this.ProcCountTextBox.Text = Regex.Replace(this.ProcCountTextBox.Text, "[^0-9]+", "");
+        }
+
+        private void DirectTimeTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this.DirectTimeTextBox.Text = Regex.Replace(this.DirectTimeTextBox.Text, "[^0-9]+", "");
         }
     }
 }

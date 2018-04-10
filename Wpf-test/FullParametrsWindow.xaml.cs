@@ -80,7 +80,8 @@ namespace Wpf_test
                                 }
                             }
 
-                            if(sumTasks <= 100) System.Threading.Thread.Sleep(rand.Next(1, 10));
+                            if (sumTasks <= 100) System.Threading.Thread.Sleep(rand.Next(1, 10));
+                            if ((sumTasks > 100) && (sumTasks <= 500)) System.Threading.Thread.Sleep(rand.Next(1, 5));
 
                             Dispatcher.Invoke(() =>
                             {
@@ -98,6 +99,8 @@ namespace Wpf_test
                     }
                     else
                     {
+                        if (sumTasks <= 100) System.Threading.Thread.Sleep(rand.Next(1, 10));
+
                         Dispatcher.Invoke(() =>
                         {
                             for (int k = 0; k < this._settingsParametrs.TaskCounts; k++)
