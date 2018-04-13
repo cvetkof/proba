@@ -55,23 +55,22 @@ namespace Wpf_test
                 {
                     var task = new TaskClass
                     {
-                        Mathematic = rand.Next(1,50000),
-                        Dispr = rand.Next(1,50000),
-                        TimeToWork = rand.Next(1, 420), // значение от 1c до 7мин
+                        Mathematic = rand.Next(1,53000),
+                        Dispr = rand.Next(1,53000),
+                        TimeToWork = rand.Next(1, 1800), // значение от 1c до 30мин
                         Importance = rand.Next(1, 100), // значение от 1 до 100
                         IndexNumber = count + 1,
                         Guid = Guid.NewGuid()
                     };
 
-                    task.Mathematic = task.Mathematic / 10; // сведение к интервалу (0.1; 5000)
-                    task.Dispr = task.Dispr / 10; // сведение к интервалу (0.1; 5000)
+                    task.Mathematic = task.Mathematic / 10; // сведение к интервалу (0.1; 5300)
+                    task.Dispr = task.Dispr / 10; // сведение к интервалу (0.1; 5300)
 
                     TaskManagerClass.ListTasks.Add(task);
                 }
 
             ParametersWindowGrid.ItemsSource = TaskManagerClass.ListTasks;
             ParametersWindowGrid.ColumnWidth = DataGridLength.Auto;
-
             }
             else
             {
@@ -146,7 +145,8 @@ namespace Wpf_test
                         c2 = middleC;
                     };
 
-                    //System.Threading.Thread.Sleep(rand.Next(1,10));
+                    System.Threading.Thread.Sleep(rand.Next(1,7));
+                    System.Threading.Thread.Sleep(rand.Next(1,7));
                 }
                 
             

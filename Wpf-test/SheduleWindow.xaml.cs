@@ -93,7 +93,7 @@ namespace Wpf_test
 
             double value = (Convert.ToDouble(TaskManagerClass.ResultListTasks.Count) / Convert.ToDouble(this._settingsParametrs.TaskCounts)) * 100;
             var percent_tasks = Math.Round((value), 2);
-            ResultTasksListTextBox.AppendText("\n  Количество задач выставленных на обработку - " + TaskManagerClass.ResultListTasks.Count + " (" + percent_tasks + "%)");
+            ResultTasksListTextBox.AppendText("\n  Количество задействованных в разведке МКА - " + TaskManagerClass.ResultListTasks.Count + " (" + percent_tasks + "%)");
 
         }
 
@@ -196,5 +196,9 @@ namespace Wpf_test
         //        File.AppendAllText("d:\\Shedule.docx", Convert.ToString(TaskManagerClass.ResultListTasks[i].TimeToWork) + "\n");
         //    }
         //}
+
+        public void Model()
+        {
+        }
     }
 }

@@ -85,6 +85,8 @@
                 </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
+        
+        <!--<TextBox Grid.Column="1" Margin="20,76,30,339" TextWrapping="Wrap" Name="middleTimeToStartTextBox" Height="24" Width="50" VerticalAlignment="Center" IsReadOnly="True" BorderBrush="Black" TextAlignment="Center"/>-->
 
     </Grid>
 </Window>

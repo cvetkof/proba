@@ -33,13 +33,24 @@ namespace Wpf_test
                 Guid = Guid.NewGuid()
             };
 
-            task.Mathematic = Convert.ToInt32(MathTextBox.Text);
-            task.Dispr = Convert.ToInt32(DisprTextBox.Text);
-            task.TimeToWork = Convert.ToInt32(TimeToWorkTextBox.Text);
-            task.Importance = Convert.ToInt32(ImportanceTextBox.Text);
+            bool check1 = Int32.TryParse(MathTextBox.Text, out int result) && (Convert.ToInt32(MathTextBox.Text) >= 0.1) && (Convert.ToInt32(MathTextBox.Text) <= 53000);
+            bool check2 = Int32.TryParse(DisprTextBox.Text, out int result1) && (Convert.ToInt32(DisprTextBox.Text) >= 0.1) && (Convert.ToInt32(DisprTextBox.Text) <= 5300);
+            bool check3 = Int32.TryParse(TimeToWorkTextBox.Text, out int result2) && (Convert.ToInt32(TimeToWorkTextBox.Text) >= 1) && (Convert.ToInt32(TimeToWorkTextBox.Text) <= 1800);
+            bool check4 = Int32.TryParse(ImportanceTextBox.Text, out int result3) && (Convert.ToInt32(ImportanceTextBox.Text) >= 1) && (Convert.ToInt32(ImportanceTextBox.Text) <= 100);
 
-            TaskManagerClass.ListTasks.Add(task);
-            this.Close();
+            if (check1 && check2 && check3 && check4)
+            {
+                task.Mathematic = Convert.ToInt32(MathTextBox.Text);
+                task.Dispr = Convert.ToInt32(DisprTextBox.Text);
+                task.TimeToWork = Convert.ToInt32(TimeToWorkTextBox.Text);
+                task.Importance = Convert.ToInt32(ImportanceTextBox.Text);
+                TaskManagerClass.ListTasks.Add(task);
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Требуется ввести корректные параметры", "Ошибка при вводе параметров", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void MathTextBox_TextChanged(object sender, TextChangedEventArgs e)

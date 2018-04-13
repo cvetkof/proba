@@ -28,6 +28,7 @@ namespace Wpf_test
             this._settingsParametrs = settingsParametrs;
             InitializeComponent();
             FillSettingsValues();
+            //MiddleTimeToStart();
 
             FullParametersWindowGrid.ItemsSource = TaskManagerClass.ListTasks;
             FullParametersWindowGrid.ColumnWidth = DataGridLength.Auto;
@@ -80,8 +81,7 @@ namespace Wpf_test
                                 }
                             }
 
-                            if (sumTasks <= 100) System.Threading.Thread.Sleep(rand.Next(1, 10));
-                            if ((sumTasks > 100) && (sumTasks <= 500)) System.Threading.Thread.Sleep(rand.Next(1, 5));
+                            System.Threading.Thread.Sleep(rand.Next(1, 10));
 
                             Dispatcher.Invoke(() =>
                             {
@@ -89,23 +89,23 @@ namespace Wpf_test
                             });
                         }
 
-                        Dispatcher.Invoke(() =>
+                        for (int k = 0; k < TaskManagerClass.ResultListTasks.Count; k++)
                         {
-                            for (int k = 0; k < TaskManagerClass.ResultListTasks.Count; k++)
+                            System.Threading.Thread.Sleep(rand.Next(1, 10));
+                            Dispatcher.Invoke(() =>
                             {
                                 this.pBar.Value++;
-                            }
-                        });
+                            });
+                        }
                     }
                     else
                     {
-                        if (sumTasks <= 100) System.Threading.Thread.Sleep(rand.Next(1, 10));
-
                         Dispatcher.Invoke(() =>
                         {
                             for (int k = 0; k < this._settingsParametrs.TaskCounts; k++)
                             {
                                 this.pBar.Value++;
+                                System.Threading.Thread.Sleep(rand.Next(1, 10));
                             }
                         });
                     }
@@ -136,6 +136,20 @@ namespace Wpf_test
             DirectTimeTextBox.Text = this._settingsParametrs.DirectTime.ToString();
             TasksCountTextBox.Text = this._settingsParametrs.TaskCounts.ToString();
         }
+
+        //public void MiddleTimeToStart()
+        //{
+        //    double middleTTS = 0;
+        //    for (int i = 0; i < TaskManagerClass.ListTasks.Count; i++)
+        //    {
+        //        middleTTS += TaskManagerClass.ListTasks[i].TimeToStart;
+        //    }
+
+        //    middleTTS /= TaskManagerClass.ListTasks.Count;
+
+        //    this.middleTimeToStartTextBox.Text = Convert.ToString(middleTTS);
+        //}
+
 
         /// <summary>
         /// сумма важностей всех задач

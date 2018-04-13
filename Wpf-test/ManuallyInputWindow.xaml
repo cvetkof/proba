@@ -10,10 +10,10 @@
         ResizeMode="NoResize"
         Background="Azure">
     <Grid>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="95,79,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="53" BorderBrush="Black" Name="MathTextBox" TextChanged="MathTextBox_TextChanged" />
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="153,79,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="53" BorderBrush="Black" Name="DisprTextBox" TextChanged="DisprTextBox_TextChanged" />
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="211,79,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="53" BorderBrush="Black" Name="TimeToWorkTextBox" TextChanged="TimeToWorkTextBox_TextChanged" />
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="269,79,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="53" BorderBrush="Black" Name="ImportanceTextBox" TextChanged="ImportanceTextBox_TextChanged" />
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="95,79,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="53" BorderBrush="Black" Name="MathTextBox" TextChanged="MathTextBox_TextChanged" ToolTip="Math (мат.ожидание) от 0.1 до 5300"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="153,79,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="53" BorderBrush="Black" Name="DisprTextBox" TextChanged="DisprTextBox_TextChanged" ToolTip="Dispr (дисперсия) от 0.1 до 5300"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="211,79,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="53" BorderBrush="Black" Name="TimeToWorkTextBox" TextChanged="TimeToWorkTextBox_TextChanged" ToolTip="время обработки от 1 до 1800 сек (30 мин)"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="269,79,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="53" BorderBrush="Black" Name="ImportanceTextBox" TextChanged="ImportanceTextBox_TextChanged" ToolTip="W (важность) от 1 до 100"/>
 
         <Button Content="OK" HorizontalAlignment="Left" Margin="95,118,0,0" VerticalAlignment="Top" Width="227" Height="23" Click="OK_Button_Click"/>
 

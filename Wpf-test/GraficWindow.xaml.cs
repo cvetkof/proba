@@ -75,9 +75,9 @@ namespace Wpf_test
             {
                 var line = new Line
                 {
-                    X1 = 10,
+                    X1 = 20,
                     Y1 = 50 + k,
-                    X2 = 10 + this._settingsParametrs.DirectTime + 40,
+                    X2 = 20 + this._settingsParametrs.DirectTime + 40,
                     Y2 = 50 + k
                 };
 
@@ -85,6 +85,11 @@ namespace Wpf_test
                 lable.Margin = new Thickness(30 + this._settingsParametrs.DirectTime, 25 + k, 0, 600 - (60 + k));
                 lable.Content = "t";
                 GraficGrid.Children.Add(lable);
+
+                var lableproc = new Label();
+                lableproc.Margin = new Thickness(5, 25 + k, 0, 600 - (60 + k));
+                lableproc.Content = i + 1;
+                GraficGrid.Children.Add(lableproc);
 
                 k += 50;
                 line.Stroke = Brushes.Black;
@@ -96,17 +101,17 @@ namespace Wpf_test
 
             var verticalLine = new Line
             {
-                X1 = 10,
+                X1 = 20,
                 Y1 = 10,
-                X2 = 10,
+                X2 = 20,
                 Y2 = k
             };
 
             var dirLine = new Line
             {
-                X1 = this._settingsParametrs.DirectTime + 10,
+                X1 = this._settingsParametrs.DirectTime + 20,
                 Y1 = 10,
-                X2 = this._settingsParametrs.DirectTime + 10,
+                X2 = this._settingsParametrs.DirectTime + 20,
                 Y2 = k 
             };
 
@@ -136,7 +141,7 @@ namespace Wpf_test
                         x = TaskManagerClass.ResultListTasks[j];
 
                         var rectangle = new Rectangle();
-                        rectangle.Margin = new Thickness(x.TimeToStart + 10, 20 + k, dirt - x.TimeToEnd + 40, 600 - (58 + k));
+                        rectangle.Margin = new Thickness(x.TimeToStart + 20, 20 + k, dirt - x.TimeToEnd + 40, 600 - (58 + k));
                         rectangle.Fill = this.GetRandomColor();
                         rectangle.Stroke = Brushes.Black;
                         GraficGrid.Children.Add(rectangle);
@@ -147,11 +152,11 @@ namespace Wpf_test
 
                         if (x.TimeToWork < 21)
                         {
-                            label.Margin = new Thickness(x.TimeToStart + 4, 1 + k, dirt - (x.TimeToEnd + 40), 600 - (55 + k));
+                            label.Margin = new Thickness(x.TimeToStart + 14, 1 + k, dirt - (x.TimeToEnd + 40), 600 - (55 + k));
                         }
                         else
                         {
-                            label.Margin = new Thickness(x.TimeToStart + 8, 20 + k, dirt - (x.TimeToEnd + 40), 600 - (55 + k));
+                            label.Margin = new Thickness(x.TimeToStart + 18, 20 + k, dirt - (x.TimeToEnd + 40), 600 - (55 + k));
                         }
 
                         label.Content = x.IndexNumber;                        
