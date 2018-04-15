@@ -180,6 +180,8 @@ namespace Wpf_test
 
         private void Make_Grafic(object sender, RoutedEventArgs e)
         {
+            this.Cursor = Cursors.Wait;
+
             var graficWindow = new GraficWindow(this._settingsParametrs);
             graficWindow.Show();
         }

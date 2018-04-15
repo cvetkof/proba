@@ -36,6 +36,10 @@ namespace Wpf_test
 
         private void MakeShedule(object sender, RoutedEventArgs e)
         {
+            this.Cursor = Cursors.Wait;
+            this.Schedule_button.IsEnabled = false;
+            this.Back_button.IsEnabled = false;
+
             SortRelativityImportance();
             TaskManagerClass.InitializeMiddleResultListTasks();
             TaskManagerClass.InitializeResultListTasks();

@@ -88,6 +88,10 @@ namespace Wpf_test
 
         private void SetStartTime(object sender, RoutedEventArgs e)
         {
+            this.Cursor = Cursors.Wait;
+            this.SetStartTime_button.IsEnabled = false;
+            this.Back_button.IsEnabled = false;
+
             Task.Run(() =>
             {
                 Dispatcher.Invoke(() =>
